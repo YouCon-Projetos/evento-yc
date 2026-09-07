@@ -1,13 +1,18 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
 import type { EventoConfig } from "@/eventos/tipos";
 import { Titulo } from "../Titulo";
 import { FundoParallax } from "./FundoParallax";
+
+const irAoFormulario = () => document.getElementById("cta-section")?.scrollIntoView({ behavior: "smooth" });
 
 /**
  * Para quem é: grade dividida por fios sobre uma foto de projeto que anda em
  * parallax. Os cartões são translúcidos para a imagem aparecer entre eles sem
  * atrapalhar a leitura.
  */
-export function AudienceSection({ publico }: { publico: NonNullable<EventoConfig["publico"]> }) {
+export function AudienceSection({ publico, tema }: { publico: NonNullable<EventoConfig["publico"]>; tema: EventoConfig["tema"] }) {
   const comFoto = Boolean(publico.imagemFundo);
 
   return (
@@ -34,6 +39,19 @@ export function AudienceSection({ publico }: { publico: NonNullable<EventoConfig
             </div>
           ))}
         </div>
+
+        {publico.cta && (
+          <div className="mt-10 flex justify-center md:mt-14">
+            <Button
+              variant={tema === "verde" ? "cta-green" : "hero"}
+              size="xl"
+              onClick={irAoFormulario}
+              className="h-12 w-full rounded-full text-[12px] sm:w-auto md:px-8 md:text-[13px]"
+            >
+              {publico.cta.toUpperCase()}
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

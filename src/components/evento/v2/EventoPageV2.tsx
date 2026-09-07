@@ -27,7 +27,7 @@ export function EventoPageV2({ evento }: { evento: EventoConfig }) {
       <BenefitsSection beneficios={evento.beneficios} />
       {evento.galeria && <GaleriaSection galeria={evento.galeria} />}
       {evento.galeria && <FaixaFecho linhas={evento.galeria.fecho} />}
-      {evento.publico && <AudienceSection publico={evento.publico} />}
+      {evento.publico && <AudienceSection publico={evento.publico} tema={evento.tema} />}
       <AgendaSection agenda={evento.agenda} />
       <HostsSection hosts={evento.hosts} participacao={evento.participacao} />
       <CTASection cta={evento.cta} formulario={evento.formulario} webhookEvento={evento.webhookEvento} tema={evento.tema} destaques={evento.destaques} />

@@ -69,8 +69,11 @@ export type EventoConfig = {
   /** Gráfico comparativo do workshop de incorporação */
   grafico?: boolean;
 
-  /** imagemFundo: foto de fundo da seção (v2), atrás de um véu escuro. */
-  publico?: { titulo: Titulo; subtitulo: string; imagemFundo?: string; itens: Item[] };
+  /**
+   * imagemFundo: foto de fundo da seção (v2), atrás de um véu escuro.
+   * cta: rótulo do botão abaixo da grade (v2); sem ele, a seção não tem botão.
+   */
+  publico?: { titulo: Titulo; subtitulo: string; imagemFundo?: string; cta?: string; itens: Item[] };
 
   /**
    * Animação guiada pelo scroll: locação dos pilares deita em perspectiva e a
