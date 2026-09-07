@@ -1,23 +1,18 @@
-import Image from "next/image";
 import type { EventoConfig } from "@/eventos/tipos";
 import { Titulo } from "../Titulo";
+import { FundoParallax } from "./FundoParallax";
 
 /**
- * Para quem é: grade dividida por fios sobre uma foto de projeto. Os cartões
- * são translúcidos para a imagem aparecer entre eles sem atrapalhar a leitura.
+ * Para quem é: grade dividida por fios sobre uma foto de projeto que anda em
+ * parallax. Os cartões são translúcidos para a imagem aparecer entre eles sem
+ * atrapalhar a leitura.
  */
 export function AudienceSection({ publico }: { publico: NonNullable<EventoConfig["publico"]> }) {
   const comFoto = Boolean(publico.imagemFundo);
 
   return (
     <section className="relative overflow-hidden px-6 py-20 md:px-10 md:py-28 lg:px-12 lg:py-36">
-      {publico.imagemFundo && (
-        <div className="absolute inset-0" aria-hidden="true">
-          <Image src={publico.imagemFundo} alt="" fill sizes="100vw" className="object-cover object-center" />
-          <div className="absolute inset-0 bg-background/72" />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/45 to-background" />
-        </div>
-      )}
+      {publico.imagemFundo && <FundoParallax src={publico.imagemFundo} />}
 
       <div className="relative mx-auto w-full max-w-[1180px]">
         <div className="mb-10 grid grid-cols-1 gap-5 md:mb-16 md:grid-cols-2 md:items-end md:gap-20">
@@ -31,7 +26,7 @@ export function AudienceSection({ publico }: { publico: NonNullable<EventoConfig
           {publico.itens.map((p, i) => (
             <div
               key={p.titulo}
-              className={`flex flex-col gap-3 p-6 md:p-10 ${comFoto ? "bg-background/75 backdrop-blur-md" : "bg-background"}`}
+              className={`flex flex-col gap-3 p-6 md:p-10 ${comFoto ? "bg-background/70 backdrop-blur-md" : "bg-background"}`}
             >
               <span className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
               <h3 className="font-display text-[16px] font-bold text-foreground md:text-[18px]">{p.titulo}</h3>
