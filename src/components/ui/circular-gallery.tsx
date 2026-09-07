@@ -19,14 +19,21 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   velocidade?: number;
 };
 
-/** Cartão e raio por largura de tela: no celular o anel encolhe para caber. */
-function medidas(largura: number, n: number) {
+/** Profundidade da cena. O mesmo valor vai no `perspective` do container. */
+const PERSPECTIVA = 2000;
+
+/**
+ * Medidas do anel para a altura disponível. A perspectiva amplia o cartão da
+ * frente (escala = P / (P - raio)), então o cartão é dimensionado a partir da
+ * altura JÁ ampliada — senão ele transborda a seção e cobre o que vem depois.
+ */
+function medidas(largura: number, altura: number, n: number) {
   const estreito = largura < 640;
-  const cardW = estreito ? 200 : 300;
-  const cardH = estreito ? 280 : 400;
-  // Raio mínimo para os cartões não se sobreporem no anel, com folga de 25%
-  const raio = Math.max(estreito ? 340 : 600, (n * cardW * 1.25) / (2 * Math.PI));
-  return { cardW, cardH, raio };
+  const raio = estreito ? 340 : 600;
+  const escala = PERSPECTIVA / (PERSPECTIVA - raio);
+  const cardH = Math.min(estreito ? 300 : 380, (altura * 0.9) / escala);
+  const cardW = Math.round(cardH * 0.75);
+  return { cardW, cardH: Math.round(cardH), raio };
 }
 
 /**
@@ -49,7 +56,7 @@ export function CircularGallery({ items, velocidade = 0.06, className, ...props 
     const reduz = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const aplicarMedidas = () => {
-      const { cardW, cardH, raio } = medidas(window.innerWidth, n);
+      const { cardW, cardH, raio } = medidas(window.innerWidth, anel.clientHeight, n);
       cardRefs.current.forEach((card, i) => {
         if (!card) return;
         card.style.width = `${cardW}px`;
@@ -70,6 +77,11 @@ export function CircularGallery({ items, velocidade = 0.06, className, ...props 
         const frente = rel > 180 ? 360 - rel : rel;
         // Os de trás continuam visíveis, só mais apagados (como na referência)
         card.style.opacity = String(Math.max(0.3, 1 - frente / 180));
+        // Passado o perfil, o cartão está de costas: o conteúdo vira junto, senão
+        // a foto e a legenda apareceriam espelhadas. A troca acontece quando ele
+        // está de lado, com largura quase nula, então não se vê o corte.
+        const conteudo = card.firstElementChild as HTMLElement | null;
+        if (conteudo) conteudo.style.transform = frente > 90 ? "rotateY(180deg)" : "";
       });
     };
 
@@ -146,7 +158,7 @@ export function CircularGallery({ items, velocidade = 0.06, className, ...props 
       role="region"
       aria-label="Galeria de projetos"
       className={cn("relative w-full cursor-grab select-none active:cursor-grabbing", className)}
-      style={{ perspective: "2000px", touchAction: "pan-y" }}
+      style={{ perspective: `${PERSPECTIVA}px`, touchAction: "pan-y" }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={soltar}
@@ -162,21 +174,21 @@ export function CircularGallery({ items, velocidade = 0.06, className, ...props 
             ref={(el) => { cardRefs.current[i] = el; }}
             role="group"
             aria-label={item.nome}
-            className="absolute left-1/2 top-1/2 w-[300px] h-[400px] -ml-[150px] -mt-[200px]"
+            className="absolute left-1/2 top-1/2 h-[380px] w-[285px]"
           >
             <div className="relative h-full w-full overflow-hidden rounded-xl border border-white/10 bg-card shadow-2xl shadow-black/60 md:rounded-2xl">
               <Image
                 src={item.foto}
                 alt={item.alt}
                 fill
-                sizes="(max-width: 640px) 200px, 300px"
+                sizes="(max-width: 640px) 220px, 290px"
                 draggable={false}
                 className="object-cover"
                 style={{ objectPosition: item.posicao ?? "center" }}
               />
               <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/85 via-black/40 to-transparent p-3 text-white md:p-4">
-                <h3 className="text-sm font-bold leading-tight md:text-base">{item.nome}</h3>
-                <p className="mt-1 text-[11px] text-white/75 md:text-xs">{item.legenda}</p>
+                <h3 className="text-[13px] font-bold leading-tight md:text-[15px]">{item.nome}</h3>
+                <p className="mt-1 text-[11px] text-white/75">{item.legenda}</p>
               </div>
             </div>
           </div>

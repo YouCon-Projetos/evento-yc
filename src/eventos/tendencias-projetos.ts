@@ -92,6 +92,8 @@ export const tendenciasProjetos: EventoConfig = {
   publico: {
     titulo: { antes: "Essa consultoria é para você que está ", destaque: "pensando no projeto da sua casa", depois: "." },
     subtitulo: "Independentemente da fase em que você está, o encontro foi pensado para ampliar seu repertório e apresentar novas possibilidades para o seu projeto.",
+    // PENDENTE (Gui): foto de um projeto YouCon para o fundo desta seção
+    imagemFundo: midia("img/metalica-hero-desktop.jpg"),
     itens: [
       { icone: "Landmark", titulo: "Já tem o terreno", descricao: "E quer começar a entender os caminhos possíveis para a arquitetura da sua futura casa." },
       { icone: "ClipboardCheck", titulo: "Está planejando construir", descricao: "E quer conhecer referências e soluções antes de tomar as principais decisões do projeto." },

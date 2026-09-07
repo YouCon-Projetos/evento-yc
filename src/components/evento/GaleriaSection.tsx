@@ -22,7 +22,7 @@ export function GaleriaSection({ galeria }: { galeria: NonNullable<EventoConfig[
       </div>
 
       {/* O anel sai da margem: as fotos das laterais passam da borda da tela de propósito */}
-      <CircularGallery items={galeria.itens} className="mt-12 h-[360px] sm:h-[480px] md:mt-16 lg:h-[520px]" />
+      <CircularGallery items={galeria.itens} className="mt-12 h-[400px] sm:h-[520px] md:mt-16 lg:h-[580px]" />
 
       <div className="px-6 md:px-10 lg:px-12">
         <p className="text-center text-[11px] text-muted-foreground">Arraste ou role a página para girar a galeria</p>
