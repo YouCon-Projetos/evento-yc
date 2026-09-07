@@ -2,6 +2,7 @@ import type { EventoConfig } from "@/eventos/tipos";
 import { AmbientGlow } from "../AmbientGlow";
 import { CountdownBanner } from "../CountdownBanner";
 import { GaleriaSection } from "../GaleriaSection";
+import { FaixaFecho } from "./FaixaFecho";
 import { Footer } from "../Footer";
 import { HeroSection } from "./HeroSection";
 import { DestaquesStrip } from "./DestaquesStrip";
@@ -25,6 +26,7 @@ export function EventoPageV2({ evento }: { evento: EventoConfig }) {
       {evento.destaques && <DestaquesStrip destaques={evento.destaques} />}
       <BenefitsSection beneficios={evento.beneficios} />
       {evento.galeria && <GaleriaSection galeria={evento.galeria} />}
+      {evento.galeria && <FaixaFecho linhas={evento.galeria.fecho} />}
       {evento.publico && <AudienceSection publico={evento.publico} />}
       <AgendaSection agenda={evento.agenda} />
       <HostsSection hosts={evento.hosts} participacao={evento.participacao} />

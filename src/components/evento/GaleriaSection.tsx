@@ -7,7 +7,7 @@ import { Titulo } from "./Titulo";
 /** Projetos reais da YouCon num anel 3D: gira sozinho enquanto está na tela, segue a rolagem e aceita arrastar. */
 export function GaleriaSection({ galeria }: { galeria: NonNullable<EventoConfig["galeria"]> }) {
   return (
-    <section className="relative overflow-hidden border-y border-border bg-section-alt py-20 md:py-28 lg:py-32">
+    <section className="relative overflow-hidden border-y border-border bg-section-alt pb-16 pt-20 md:pb-20 md:pt-28 lg:pb-24 lg:pt-32">
       <div className="px-6 md:px-10 lg:px-12">
         <div className="mx-auto flex max-w-[560px] flex-col items-center gap-5 text-center">
           <span className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-primary">Galeria de projetos YouCon</span>
@@ -26,11 +26,6 @@ export function GaleriaSection({ galeria }: { galeria: NonNullable<EventoConfig[
 
       <div className="px-6 md:px-10 lg:px-12">
         <p className="text-center text-[11px] text-muted-foreground">Arraste ou role a página para girar a galeria</p>
-        <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center gap-2 text-center md:mt-14">
-          {galeria.fecho.map((linha, i) => (
-            <p key={linha} className={`font-display text-[11px] font-bold uppercase tracking-[0.18em] md:text-[13px] md:tracking-[0.2em] ${i === 0 ? "text-foreground" : "text-muted-foreground"}`}>{linha}</p>
-          ))}
-        </div>
       </div>
     </section>
   );
