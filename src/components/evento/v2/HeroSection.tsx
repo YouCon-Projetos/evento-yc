@@ -33,7 +33,7 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
   }, []);
 
   return (
-    <section className="relative flex min-h-[calc(100vh-4rem)] flex-col overflow-hidden pb-12 md:min-h-[calc(100vh-3.5rem)] md:pb-20">
+    <section className="relative flex min-h-[calc(100vh-4rem)] flex-col overflow-hidden pb-14 md:min-h-[calc(100vh-3.5rem)] md:pb-20">
       <div className="absolute inset-0 overflow-hidden">
         <div ref={bgRef} className="absolute inset-0 will-change-transform">
           <Image src={hero.imagemMobile} alt="" fill priority sizes="100vw" className="scale-110 object-cover md:hidden" />
@@ -46,24 +46,26 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
         <div className="absolute inset-0 hidden bg-gradient-to-b from-black/35 via-transparent to-background md:block" />
       </div>
 
-      <header className="relative z-20 flex items-center justify-between px-6 py-5 md:px-12 md:py-7 lg:px-16">
-        <Image src={LOGO_YOUCON} alt="YouCon Arquitetura" width={192} height={48} priority className="h-7 w-auto md:h-9" />
-        <div className="hidden items-center gap-2.5 rounded-full border border-white/15 bg-black/30 px-4 py-2 backdrop-blur-sm md:flex">
-          <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary))]" />
-          <span className="font-display text-[11px] font-semibold uppercase tracking-[0.1em] text-foreground">{quando}</span>
+      <header className="relative z-20 px-6 py-6 md:px-10 md:py-8 lg:px-12">
+        <div className="mx-auto flex w-full max-w-[1180px] items-center justify-between">
+          <Image src={LOGO_YOUCON} alt="YouCon Arquitetura" width={192} height={48} priority className="h-6 w-auto md:h-8" />
+          <div className="hidden items-center gap-2.5 rounded-full border border-white/15 bg-black/30 px-3.5 py-1.5 backdrop-blur-sm md:flex">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary))]" />
+            <span className="font-display text-[10px] font-semibold uppercase tracking-[0.12em] text-foreground">{quando}</span>
+          </div>
         </div>
       </header>
 
-      <div className="relative z-10 flex flex-1 items-center px-6 pt-6 md:px-12 md:pt-0 lg:px-16">
-        <div className="grid w-full grid-cols-1 items-center gap-10 md:grid-cols-[minmax(0,1fr)_300px] md:gap-12 lg:gap-16">
-          <div className="flex flex-col items-start gap-5 md:gap-7">
-            <span className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-primary md:text-[11px]">{hero.tag}</span>
+      <div className="relative z-10 flex flex-1 items-center px-6 pt-8 md:px-10 md:pt-0 lg:px-12">
+        <div className="mx-auto grid w-full max-w-[1180px] grid-cols-1 items-center gap-12 md:grid-cols-[minmax(0,1fr)_270px] md:gap-14 lg:gap-20">
+          <div className="flex flex-col items-start gap-6 md:gap-7">
+            <span className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-primary">{hero.tag}</span>
 
-            <h1 className="font-display max-w-[22rem] text-[30px] font-extrabold leading-[1.05] tracking-[-0.03em] text-foreground text-pretty sm:max-w-[32rem] sm:text-[38px] md:max-w-[34rem] md:text-[44px] lg:max-w-[42rem] lg:text-[54px] xl:text-[60px]">
+            <h1 className="font-display max-w-[20rem] text-[28px] font-extrabold leading-[1.08] tracking-[-0.03em] text-foreground text-pretty sm:max-w-[28rem] sm:text-[34px] md:max-w-[26rem] md:text-[34px] lg:max-w-[32rem] lg:text-[40px] xl:max-w-[36rem] xl:text-[44px]">
               <Titulo t={hero.titulo} />
             </h1>
 
-            <p className="max-w-[34rem] text-[14px] leading-relaxed text-[#cfcfcf] md:text-[16px] lg:text-[17px]">
+            <p className="max-w-[30rem] text-[14px] leading-[1.7] text-[#cfcfcf] md:text-[15px]">
               {hero.subtitulo.map((p, i) => (
                 <span key={i} className={p.forte ? "font-semibold text-foreground" : p.destaque ? "font-semibold text-primary" : undefined}>
                   {p.texto}
@@ -78,24 +80,24 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
               </div>
             )}
 
-            <div className="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+            <div className="mt-1 flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
               <Button
                 variant={tema === "verde" ? "cta-green" : "hero"}
                 size="xl"
                 onClick={irAoFormulario}
-                className="h-12 w-full rounded-full text-[13px] sm:w-auto md:h-14 md:px-9 md:text-sm"
+                className="h-12 w-full rounded-full text-[12px] sm:w-auto md:px-8 md:text-[13px]"
               >
                 {hero.cta.toUpperCase()}
               </Button>
 
               <div className="flex flex-col gap-1">
                 {hero.provaSocial && (
-                  <span className="inline-flex items-center gap-2 text-[13px] font-semibold text-primary md:text-sm">
-                    <Users className="h-4 w-4" />
+                  <span className="inline-flex items-center gap-2 text-[13px] font-semibold text-primary">
+                    <Users className="h-3.5 w-3.5" />
                     {hero.provaSocial}
                   </span>
                 )}
-                {hero.rodape && <span className="text-[12px] text-muted-foreground md:text-[13px]">{hero.rodape}</span>}
+                {hero.rodape && <span className="text-[12px] text-muted-foreground">{hero.rodape}</span>}
               </div>
             </div>
           </div>
