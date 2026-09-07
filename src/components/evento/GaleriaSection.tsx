@@ -17,6 +17,7 @@ export function GaleriaSection({ galeria }: { galeria: NonNullable<EventoConfig[
           <div className="space-y-3 text-[14px] leading-relaxed text-muted-foreground md:text-[15px] lg:text-base">
             {galeria.paragrafos.map((p) => <p key={p}>{p}</p>)}
           </div>
+          <p className="text-[14px] font-semibold text-foreground md:text-[15px]">{galeria.chamada}</p>
         </div>
       </div>
 

@@ -33,7 +33,7 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
   }, []);
 
   return (
-    <section className="relative flex min-h-[calc(100vh-4rem)] flex-col overflow-hidden pb-12 md:min-h-screen md:pb-20">
+    <section className="relative flex min-h-[calc(100vh-4rem)] flex-col overflow-hidden pb-12 md:min-h-[calc(100vh-3.5rem)] md:pb-20">
       <div className="absolute inset-0 overflow-hidden">
         <div ref={bgRef} className="absolute inset-0 will-change-transform">
           <Image src={hero.imagemMobile} alt="" fill priority sizes="100vw" className="scale-110 object-cover md:hidden" />
@@ -74,7 +74,7 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
             {/* No celular o vídeo entra antes do botão: assistir vem antes de decidir */}
             {video && (
               <div className="w-full md:hidden">
-                <HeroVideo {...video} legenda={video.legenda} />
+                <HeroVideo {...video} />
               </div>
             )}
 
@@ -102,7 +102,7 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
 
           {video && (
             <div className="hidden md:block">
-              <HeroVideo {...video} legenda={video.legenda} />
+              <HeroVideo {...video} />
             </div>
           )}
         </div>

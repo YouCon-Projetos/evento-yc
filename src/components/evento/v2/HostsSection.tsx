@@ -9,6 +9,11 @@ export function HostsSection({ hosts, participacao }: Props) {
   return (
     <section className="relative px-6 py-16 md:px-12 md:py-24 lg:px-16 lg:py-28">
       <div className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
+        {!participacao && (
+          <h2 className="font-display text-[24px] font-extrabold leading-[1.12] tracking-[-0.025em] text-foreground text-pretty md:text-[32px] lg:text-[38px]">
+            <Titulo t={hosts.titulo} />
+          </h2>
+        )}
         {participacao && (
           <div className="flex flex-col justify-center gap-5">
             <span className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-primary md:text-[11px]">Mais do que assistir</span>

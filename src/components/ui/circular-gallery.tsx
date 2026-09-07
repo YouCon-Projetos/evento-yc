@@ -135,6 +135,11 @@ export function CircularGallery({ items, velocidade = 0.06, className, ...props 
   const soltar = () => {
     e.arrastando = false;
   };
+  // Só o mouse pausa o giro: no toque o pointerleave costuma não chegar depois
+  // do setPointerCapture, e a galeria ficaria parada para sempre.
+  const entrou = (ev: React.PointerEvent<HTMLDivElement>) => {
+    if (ev.pointerType === "mouse") e.pausado = true;
+  };
 
   return (
     <div
@@ -145,9 +150,9 @@ export function CircularGallery({ items, velocidade = 0.06, className, ...props 
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={soltar}
-      onPointerCancel={soltar}
+      onPointerCancel={() => { soltar(); e.pausado = false; }}
       onPointerLeave={() => { soltar(); e.pausado = false; }}
-      onPointerEnter={() => { e.pausado = true; }}
+      onPointerEnter={entrou}
       {...props}
     >
       <div ref={anelRef} className="relative h-full w-full" style={{ transformStyle: "preserve-3d" }}>

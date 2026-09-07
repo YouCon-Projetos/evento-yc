@@ -7,7 +7,7 @@ type Props = Pick<EventoConfig, "cta" | "formulario" | "webhookEvento" | "tema">
 /** Fechamento em duas colunas: o argumento à esquerda, o formulário à direita. */
 export function CTASection({ cta, formulario, webhookEvento, tema, destaques }: Props) {
   return (
-    <section id="cta-section" className="relative px-6 pb-16 md:px-12 md:pb-24 lg:px-16 lg:pb-28">
+    <section id="cta-section" className="relative scroll-mt-20 px-6 pb-16 md:scroll-mt-16 md:px-12 md:pb-24 lg:px-16 lg:pb-28">
       <div className="glow-box grid grid-cols-1 gap-10 rounded-2xl border border-primary/40 bg-card/60 p-6 md:grid-cols-[minmax(0,1fr)_minmax(0,440px)] md:gap-14 md:rounded-3xl md:p-10 lg:p-14">
         <div className="flex flex-col justify-center gap-5">
           <span className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-primary md:text-[11px]">Inscrição gratuita</span>
@@ -26,7 +26,7 @@ export function CTASection({ cta, formulario, webhookEvento, tema, destaques }: 
           </div>
         </div>
 
-        <div id="inscricao-form" className="scroll-mt-24 border-t border-border pt-8 md:border-l md:border-t-0 md:pl-12 md:pt-0">
+        <div id="inscricao-form" className="border-t border-border pt-8 md:border-l md:border-t-0 md:pl-12 md:pt-0">
           <RegistrationForm evento={webhookEvento} formulario={formulario} tema={tema} />
           <p className="mt-4 text-center text-xs text-muted-foreground">Link enviado após o cadastro</p>
         </div>

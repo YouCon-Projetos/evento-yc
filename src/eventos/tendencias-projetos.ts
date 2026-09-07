@@ -42,7 +42,7 @@ export const tendenciasProjetos: EventoConfig = {
     imagemMobile: PLACEHOLDER_HERO_MOBILE,
     cta: "Quero participar gratuitamente",
     provaSocial: "+50 pessoas já se inscreveram",
-    rodape: "Vagas limitadas · online pelo Google Meet",
+    rodape: "Vagas limitadas",
   },
   destaques: [
     { valor: "22.10", rotulo: "quinta-feira, às 20h" },
