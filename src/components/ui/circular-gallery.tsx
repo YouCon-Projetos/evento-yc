@@ -17,6 +17,11 @@ type Props = HTMLAttributes<HTMLDivElement> & {
   items: GalleryItem[];
   /** Graus por quadro quando ninguém interage. */
   velocidade?: number;
+  /**
+   * Bloco alto que envolve a galeria fixa (sticky). O progresso da rolagem
+   * dentro dele vira uma volta completa do anel, como na referência.
+   */
+  trilhoRef?: React.RefObject<HTMLElement | null>;
 };
 
 /** Cartão e raio por largura de tela: no celular o anel encolhe para caber. */
@@ -34,10 +39,11 @@ function medidas(largura: number, n: number) {
  * rolagem da página e pode ser arrastado. Tudo é escrito direto no DOM a cada
  * quadro (sem re-render): um transform no anel e a opacidade de cada cartão.
  */
-export function CircularGallery({ items, velocidade = 0.06, className, ...props }: Props) {
+export function CircularGallery({ items, velocidade = 0.06, trilhoRef, className, ...props }: Props) {
   const anelRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const estado = useRef({ rot: 0, inercia: 0, pausado: false, arrastando: false, ultimoX: 0, ultimoScroll: 0 });
+  // rot = base (rolagem) + deriva (giro automático e arrasto)
+  const estado = useRef({ base: 0, deriva: 0, inercia: 0, pausado: false, arrastando: false, rolando: false, ultimoX: 0, ultimoScroll: 0, timer: 0 });
 
   useEffect(() => {
     const anel = anelRef.current;
@@ -60,11 +66,12 @@ export function CircularGallery({ items, velocidade = 0.06, className, ...props 
     };
 
     const desenhar = () => {
-      anel.style.transform = `rotateY(${e.rot}deg)`;
+      const rot = e.base + e.deriva;
+      anel.style.transform = `rotateY(${rot}deg)`;
       cardRefs.current.forEach((card, i) => {
         if (!card) return;
         // Ângulo do cartão em relação à frente (0 = de frente, 180 = atrás)
-        const rel = (((i * passo + e.rot) % 360) + 360) % 360;
+        const rel = (((i * passo + rot) % 360) + 360) % 360;
         const frente = rel > 180 ? 360 - rel : rel;
         card.style.opacity = String(Math.max(0.35, 1 - frente / 200));
       });
@@ -74,35 +81,50 @@ export function CircularGallery({ items, velocidade = 0.06, className, ...props 
     const loop = () => {
       if (!e.arrastando) {
         if (Math.abs(e.inercia) > 0.01) {
-          e.rot += e.inercia;
+          e.deriva += e.inercia;
           e.inercia *= 0.94;
-        } else if (!e.pausado && !reduz) {
-          e.rot += velocidade;
+        } else if (!e.pausado && !e.rolando && !reduz) {
+          e.deriva += velocidade;
         }
       }
       desenhar();
       raf = requestAnimationFrame(loop);
     };
 
-    // A rolagem da página também gira o anel, para a galeria "responder" ao scroll
+    // Rolagem: com trilho, o progresso dentro dele vira uma volta inteira (360°);
+    // sem trilho, cada pixel rolado dá um empurrão. Enquanto rola, o giro
+    // automático pausa (como na referência) e volta 150 ms depois.
     e.ultimoScroll = window.scrollY;
     const onScroll = () => {
-      const delta = window.scrollY - e.ultimoScroll;
+      const trilho = trilhoRef?.current;
+      if (trilho) {
+        const r = trilho.getBoundingClientRect();
+        const curso = r.height - window.innerHeight;
+        const progresso = curso > 0 ? Math.min(1, Math.max(0, -r.top / curso)) : 0;
+        e.base = progresso * 360;
+      } else {
+        e.base += (window.scrollY - e.ultimoScroll) * 0.06;
+      }
       e.ultimoScroll = window.scrollY;
-      e.rot += delta * 0.06;
+      e.rolando = true;
+      window.clearTimeout(e.timer);
+      e.timer = window.setTimeout(() => { e.rolando = false; }, 150);
     };
 
     aplicarMedidas();
+    onScroll();
+    e.rolando = false;
     desenhar();
     raf = requestAnimationFrame(loop);
     window.addEventListener("resize", aplicarMedidas);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       cancelAnimationFrame(raf);
+      window.clearTimeout(e.timer);
       window.removeEventListener("resize", aplicarMedidas);
       window.removeEventListener("scroll", onScroll);
     };
-  }, [items.length, velocidade]);
+  }, [items.length, velocidade, trilhoRef]);
 
   const e = estado.current;
   const onPointerDown = (ev: React.PointerEvent<HTMLDivElement>) => {
@@ -115,7 +137,7 @@ export function CircularGallery({ items, velocidade = 0.06, className, ...props 
     if (!e.arrastando) return;
     const dx = ev.clientX - e.ultimoX;
     e.ultimoX = ev.clientX;
-    e.rot += dx * 0.25;
+    e.deriva += dx * 0.25;
     e.inercia = dx * 0.25;
   };
   const soltar = () => {
