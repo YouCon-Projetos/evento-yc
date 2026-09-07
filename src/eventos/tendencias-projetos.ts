@@ -13,6 +13,7 @@ const PLACEHOLDER_HERO_MOBILE = midia("img/bg-mobile.jpg");
 
 export const tendenciasProjetos: EventoConfig = {
   slug: "tendencias-projetos",
+  layout: "v2",
   webhookEvento: "tendencias-projetos",
   tema: "verde",
   meta: {
@@ -40,8 +41,14 @@ export const tendenciasProjetos: EventoConfig = {
     imagemDesktop: PLACEHOLDER_HERO_DESKTOP,
     imagemMobile: PLACEHOLDER_HERO_MOBILE,
     cta: "Quero participar gratuitamente",
-    rodape: "22 de outubro às 20h | Online e ao vivo pelo Google Meet | Vagas limitadas",
+    provaSocial: "+50 pessoas já se inscreveram",
+    rodape: "Vagas limitadas · online pelo Google Meet",
   },
+  destaques: [
+    { valor: "22.10", rotulo: "quinta-feira, às 20h" },
+    { valor: "Online", rotulo: "call fechada no Google Meet" },
+    { valor: "Gratuito", rotulo: "com dúvidas respondidas ao vivo" },
+  ],
   beneficios: {
     titulo: { antes: "Novas referências podem transformar as ", destaque: "decisões do projeto", depois: " da sua casa." },
     subtitulo: [
@@ -49,12 +56,18 @@ export const tendenciasProjetos: EventoConfig = {
       "Arquitetura, distribuição dos ambientes, interiores e acabamentos precisam conversar entre si para criar uma casa que faça sentido para a sua rotina, para o seu estilo e para a forma como você deseja viver.",
       "Nesta consultoria, Thiago Cardim vai compartilhar tendências, referências e novas possibilidades que estão ganhando espaço nos projetos residenciais de alto padrão. Tudo de forma prática, visual e aplicada a situações reais.",
     ],
-    tituloItens: "Um olhar completo sobre o projeto da sua casa",
+    tituloItens: "Um olhar completo",
     itens: [
       { icone: "House", titulo: "Arquitetura e fachadas", descricao: "Conheça novas referências, estilos e soluções que podem inspirar e orientar as decisões arquitetônicas do seu projeto." },
       { icone: "LayoutGrid", titulo: "Plantas e ambientes", descricao: "Veja novas possibilidades para pensar a distribuição, integração e organização dos espaços da sua casa." },
       { icone: "Sofa", titulo: "Interiores e acabamentos", descricao: "Conheça referências e soluções para ambientes internos, acabamentos e detalhes que complementam a arquitetura da residência." },
     ],
+  },
+  // A VSL ainda não existe: até o arquivo subir ao MinIO, o hero mostra "Vídeo em breve"
+  video: {
+    src: null,
+    poster: null,
+    legenda: "O que você vai ver nesta consultoria",
   },
   galeria: {
     titulo: { antes: "Veja como essas ideias ganham forma em ", destaque: "projetos reais", depois: "." },

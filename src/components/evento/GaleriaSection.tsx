@@ -1,6 +1,5 @@
 "use client";
 
-import { Images } from "lucide-react";
 import type { EventoConfig } from "@/eventos/tipos";
 import { CircularGallery } from "@/components/ui/circular-gallery";
 import { Titulo } from "./Titulo";
@@ -8,29 +7,27 @@ import { Titulo } from "./Titulo";
 /** Projetos reais da YouCon num anel 3D: gira sozinho enquanto está na tela, segue a rolagem e aceita arrastar. */
 export function GaleriaSection({ galeria }: { galeria: NonNullable<EventoConfig["galeria"]> }) {
   return (
-    <section className="relative overflow-hidden bg-section-alt py-10 md:py-16 lg:py-20">
-      <div className="container relative mx-auto px-4 md:px-6">
-        <div className="mx-auto mb-2 max-w-3xl text-center md:mb-4">
-          <h2 className="mb-2.5 text-base font-bold text-foreground sm:text-lg md:mb-5 md:text-2xl lg:text-[1.75rem]"><Titulo t={galeria.titulo} /></h2>
-          <div className="space-y-3 text-[13px] leading-relaxed text-muted-foreground md:space-y-4 md:text-[15px] lg:text-base">
+    <section className="relative overflow-hidden border-y border-border bg-section-alt py-16 md:py-24 lg:py-28">
+      <div className="px-6 md:px-12 lg:px-16">
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center">
+          <span className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-primary md:text-[11px]">Galeria de projetos YouCon</span>
+          <h2 className="font-display text-[24px] font-extrabold leading-[1.12] tracking-[-0.025em] text-foreground text-pretty md:text-[32px] lg:text-[38px]">
+            <Titulo t={galeria.titulo} />
+          </h2>
+          <div className="space-y-3 text-[14px] leading-relaxed text-muted-foreground md:text-[15px] lg:text-base">
             {galeria.paragrafos.map((p) => <p key={p}>{p}</p>)}
           </div>
-          <p className="mt-4 text-[13px] font-semibold text-foreground md:mt-6 md:text-[15px]">{galeria.chamada}</p>
-          <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-primary md:mt-5 md:px-4 md:text-xs">
-            <Images className="h-3.5 w-3.5" />
-            Galeria de projetos YouCon
-          </span>
         </div>
       </div>
 
-      {/* O anel sai do container: as fotos das laterais passam da borda da tela de propósito */}
-      <CircularGallery items={galeria.itens} className="h-[400px] sm:h-[560px] lg:h-[600px]" />
+      {/* O anel sai da margem: as fotos das laterais passam da borda da tela de propósito */}
+      <CircularGallery items={galeria.itens} className="mt-10 h-[380px] sm:h-[520px] md:mt-14 lg:h-[560px]" />
 
-      <div className="container relative mx-auto px-4 md:px-6">
+      <div className="px-6 md:px-12 lg:px-16">
         <p className="text-center text-[11px] text-muted-foreground md:text-xs">Arraste ou role a página para girar a galeria</p>
-        <div className="mx-auto mt-6 max-w-2xl text-center md:mt-10">
-          {galeria.fecho.map((linha) => (
-            <p key={linha} className="text-[11px] font-bold uppercase tracking-[0.12em] text-foreground md:text-base md:tracking-[0.18em]">{linha}</p>
+        <div className="mx-auto mt-8 flex max-w-2xl flex-col items-center gap-1.5 text-center md:mt-12">
+          {galeria.fecho.map((linha, i) => (
+            <p key={linha} className={`font-display text-[11px] font-bold uppercase tracking-[0.18em] md:text-sm md:tracking-[0.2em] ${i === 0 ? "text-foreground" : "text-muted-foreground"}`}>{linha}</p>
           ))}
         </div>
       </div>

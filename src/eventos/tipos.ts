@@ -26,6 +26,11 @@ export type Host = {
 
 export type EventoConfig = {
   slug: string;
+  /**
+   * "v1" (padrão) é o template original de eventos; "v2" é o layout editorial
+   * com hero assimétrico, VSL ao lado e blocos separados por fios.
+   */
+  layout?: "v1" | "v2";
   /** Identificador enviado ao webhook junto com a inscrição */
   webhookEvento: string;
   /** "laranja" = consultorias (CTA hero); "verde" = workshops (CTA verde) */
@@ -56,8 +61,11 @@ export type EventoConfig = {
    */
   beneficios: { titulo: Titulo; subtitulo?: string | string[]; tituloItens?: string; itens: Item[] };
 
-  /** Vídeo vertical 9:16; null mostra "Vídeo em breve" */
+  /** Vídeo vertical 9:16; null mostra "Vídeo em breve". No v2 fica no hero. */
   video?: { src: string | null; poster: string | null; legenda: string };
+
+  /** Faixa de dados logo abaixo do hero (v2): data, formato, preço. */
+  destaques?: Array<{ valor: string; rotulo: string }>;
   /** Gráfico comparativo do workshop de incorporação */
   grafico?: boolean;
 
