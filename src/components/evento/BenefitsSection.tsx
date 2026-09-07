@@ -12,7 +12,11 @@ export function BenefitsSection({ beneficios, video, grafico }: Props) {
       <div className="container relative mx-auto px-4 md:px-6">
         <div className="mx-auto mb-6 max-w-3xl text-center md:mb-16">
           <h2 className="mb-2.5 text-base font-bold text-foreground sm:text-lg md:mb-5 md:text-2xl lg:text-[1.75rem]"><Titulo t={beneficios.titulo} /></h2>
-          {beneficios.subtitulo && <p className="text-[13px] leading-relaxed text-muted-foreground md:text-[15px] lg:text-base">{beneficios.subtitulo}</p>}
+          {beneficios.subtitulo && (
+            <div className="space-y-3 text-[13px] leading-relaxed text-muted-foreground md:space-y-4 md:text-[15px] lg:text-base">
+              {(Array.isArray(beneficios.subtitulo) ? beneficios.subtitulo : [beneficios.subtitulo]).map((p) => <p key={p}>{p}</p>)}
+            </div>
+          )}
         </div>
 
         {video && (
@@ -20,6 +24,10 @@ export function BenefitsSection({ beneficios, video, grafico }: Props) {
             <VideoPlayer {...video} />
             {grafico && <ComparisonChart />}
           </div>
+        )}
+
+        {beneficios.tituloItens && (
+          <h3 className="mb-6 text-center text-[15px] font-bold uppercase tracking-wider text-foreground md:mb-10 md:text-lg">{beneficios.tituloItens}</h3>
         )}
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6 lg:gap-8">

@@ -5,6 +5,8 @@ import { HeroSection } from "./HeroSection";
 import { BenefitsSection } from "./BenefitsSection";
 import { AudienceSection } from "./AudienceSection";
 import { EstruturaSection } from "./estrutura/EstruturaSection";
+import { GaleriaSection } from "./GaleriaSection";
+import { ParticipacaoSection } from "./ParticipacaoSection";
 import { AgendaSection } from "./AgendaSection";
 import { HostsSection } from "./HostsSection";
 import { CTASection } from "./CTASection";
@@ -22,8 +24,10 @@ export function EventoPage({ evento }: { evento: EventoConfig }) {
       <HeroSection hero={evento.hero} tema={evento.tema} />
       <BenefitsSection beneficios={evento.beneficios} video={evento.video} grafico={evento.grafico} />
       {evento.estrutura && <EstruturaSection {...evento.estrutura} />}
+      {evento.galeria && <GaleriaSection galeria={evento.galeria} />}
       {evento.publico && <AudienceSection publico={evento.publico} />}
       <AgendaSection agenda={evento.agenda} tema={evento.tema} />
+      {evento.participacao && <ParticipacaoSection participacao={evento.participacao} />}
       <HostsSection hosts={evento.hosts} />
       <CTASection cta={evento.cta} formulario={evento.formulario} webhookEvento={evento.webhookEvento} tema={evento.tema} />
       <Footer />

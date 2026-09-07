@@ -10,7 +10,8 @@ export type Titulo = { antes?: string; destaque?: string; depois?: string };
 export type Icone =
   | "Landmark" | "LayoutGrid" | "TrendingUp" | "Building2" | "FileSearch" | "HardHat"
   | "ClipboardCheck" | "CircleDollarSign" | "Layers" | "Maximize" | "Rocket" | "Scale"
-  | "Timer" | "Wallet" | "Thermometer";
+  | "Timer" | "Wallet" | "Thermometer" | "House" | "Sofa" | "PencilRuler" | "Users"
+  | "MessageCircleQuestion" | "Sparkles";
 
 export type Item = { icone: Icone; titulo: string; descricao: string };
 
@@ -49,7 +50,11 @@ export type EventoConfig = {
     provaSocial?: string;
   };
 
-  beneficios: { titulo: Titulo; subtitulo?: string; itens: Item[] };
+  /**
+   * subtitulo aceita vários parágrafos; tituloItens é um segundo título, logo
+   * acima dos cards, quando a copy separa a introdução da lista.
+   */
+  beneficios: { titulo: Titulo; subtitulo?: string | string[]; tituloItens?: string; itens: Item[] };
 
   /** Vídeo vertical 9:16; null mostra "Vídeo em breve" */
   video?: { src: string | null; poster: string | null; legenda: string };
@@ -63,6 +68,21 @@ export type EventoConfig = {
    * estrutura metálica sobe sobre ela (dados em components/evento/estrutura).
    */
   estrutura?: { titulo: Titulo; subtitulo: string; fonte: string };
+
+  /**
+   * Galeria 3D em anel com projetos da YouCon: gira sozinha, acompanha a
+   * rolagem e pode ser arrastada. As fotos moram no MinIO.
+   */
+  galeria?: {
+    titulo: Titulo;
+    paragrafos: string[];
+    chamada: string;
+    itens: Array<{ nome: string; legenda: string; foto: string; alt: string; posicao?: string }>;
+    fecho: string[];
+  };
+
+  /** Bloco só de texto, entre a agenda e os hosts: "mais do que assistir". */
+  participacao?: { titulo: Titulo; paragrafos: string[] };
 
   agenda: {
     titulo: Titulo;
