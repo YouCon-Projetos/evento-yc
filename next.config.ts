@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    // Sem o otimizador da Vercel: a cota de transformação do plano Hobby é da
+    // conta inteira e estourou em 08/09/2026, derrubando todas as imagens
+    // (/_next/image respondendo 402). As imagens vão como estão, direto da origem.
+    unoptimized: true,
     remotePatterns: [
       // MinIO da YouCon: toda a mídia dos eventos mora lá, fora do repositório
       { protocol: "https", hostname: "s3.lp-youconprojetos.com.br" },
