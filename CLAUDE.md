@@ -26,4 +26,4 @@ Invertido, quebra com "Unable to locate executable file: pnpm".
 **Ao verificar um deploy:** workflow verde no GitHub não é prova. Confirme o
 estado na Vercel, `READY` é sucesso e `BLOCKED` quase sempre é e-mail errado.
 
-Para configurar isso num repo novo, use a skill `deploy-actions-vercel`.
+Para configurar isso num repo novo, use a skill `regras-vercel`.
