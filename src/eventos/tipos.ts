@@ -108,15 +108,34 @@ export type EventoConfig = {
 
   cta: { titulo: Titulo; descricao: string; data: string; horario: string; local: string };
 
-  /**
-   * qualificacao: as perguntas da etapa 2 da inscrição. Sem ela valem as
-   * perguntas residenciais padrão (terreno, projeto, faixa de investimento).
-   * `campo` é a chave enviada ao webhook; duas opções ficam lado a lado, mais
-   * que isso vira lista.
-   */
   formulario: {
     titulo: string;
     redirect: string;
-    qualificacao?: Array<{ campo: string; rotulo: string; opcoes: Array<{ valor: string; rotulo: string }> }>;
+    /**
+     * Pergunta de perfil no fim da etapa 1: cada opção traz as perguntas da
+     * etapa 2, então incorporador, construtor e investidor respondem coisas
+     * diferentes. Só as respostas do perfil escolhido vão para o webhook.
+     */
+    perfil?: {
+      campo: string;
+      rotulo: string;
+      placeholder?: string;
+      opcoes: Array<{ valor: string; rotulo: string; perguntas: Pergunta[] }>;
+    };
+    /**
+     * Etapa 2 igual para todo mundo, quando o evento não ramifica por perfil.
+     * Sem `perfil` e sem isto, valem as perguntas residenciais padrão
+     * (terreno, projeto, faixa de investimento).
+     */
+    qualificacao?: Pergunta[];
   };
+};
+
+/** Uma pergunta da etapa 2. `campo` é a chave enviada ao webhook. */
+export type Pergunta = {
+  campo: string;
+  rotulo: string;
+  /** Texto da opção vazia do select, ex.: "Selecione seu cargo" */
+  placeholder?: string;
+  opcoes: Array<{ valor: string; rotulo: string }>;
 };

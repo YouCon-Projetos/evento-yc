@@ -145,39 +145,205 @@ export const projetoAVenda: EventoConfig = {
   formulario: {
     titulo: "Garantir meu acesso gratuito",
     redirect: "https://chat.whatsapp.com/BxXxLl9oORFDK16nmeBaX7",
-    // Condensado das perguntas das campanhas da Meta: quem decide, quando compra, quanto vale
-    qualificacao: [
-      {
-        campo: "role",
-        rotulo: "Qual seu cargo ou função na construtora/incorporadora?",
-        opcoes: [
-          { valor: "socio-diretor", rotulo: "Sócio ou diretor" },
-          { valor: "gerente-projetos", rotulo: "Gerente de projetos" },
-          { valor: "engenheiro-civil", rotulo: "Engenheiro civil" },
-          { valor: "arquiteto-coordenador", rotulo: "Arquiteto coordenador" },
-          { valor: "outro", rotulo: "Outro" },
-        ],
-      },
-      {
-        campo: "projectStage",
-        rotulo: "Em qual fase o empreendimento se encontra?",
-        opcoes: [
-          { valor: "prospeccao-terreno", rotulo: "Prospecção de terreno" },
-          { valor: "terreno-sem-viabilidade", rotulo: "Terreno adquirido, sem estudo de viabilidade" },
-          { valor: "viabilidade-concluida", rotulo: "Estudo de viabilidade concluído" },
-          { valor: "projetos-iniciados", rotulo: "Já possuo alguns projetos iniciados" },
-        ],
-      },
-      {
-        campo: "builtArea",
-        rotulo: "Qual a área estimada de construção (ATC)?",
-        opcoes: [
-          { valor: "ate-1000", rotulo: "Até 1.000 m²" },
-          { valor: "1000-5000", rotulo: "De 1.000 m² a 5.000 m²" },
-          { valor: "5000-20000", rotulo: "De 5.000 m² a 20.000 m²" },
-          { valor: "acima-20000", rotulo: "Acima de 20.000 m²" },
-        ],
-      },
-    ],
+    // Condensado das perguntas das campanhas da Meta. O perfil vem na etapa 1
+    // e escolhe as três perguntas da etapa 2: quem decide, quando compra e
+    // qual o porte. Os campos role/stage/size são os mesmos em todo perfil,
+    // então o CRM lê sempre as mesmas três colunas.
+    perfil: {
+      campo: "profile",
+      rotulo: "Como você atua no mercado imobiliário?",
+      placeholder: "Selecione seu perfil",
+      opcoes: [
+        {
+          valor: "incorporador",
+          rotulo: "Incorporador",
+          perguntas: [
+            {
+              campo: "role",
+              rotulo: "Qual seu cargo na incorporadora?",
+              placeholder: "Selecione seu cargo",
+              opcoes: [
+                { valor: "socio-diretor", rotulo: "Sócio ou diretor" },
+                { valor: "diretor-incorporacao", rotulo: "Diretor de incorporação" },
+                { valor: "gerente-projetos", rotulo: "Gerente de projetos" },
+                { valor: "engenheiro-arquiteto", rotulo: "Engenheiro ou arquiteto" },
+                { valor: "outro", rotulo: "Outro" },
+              ],
+            },
+            {
+              campo: "stage",
+              rotulo: "Em qual fase está o empreendimento?",
+              placeholder: "Selecione a fase",
+              opcoes: [
+                { valor: "prospeccao-terreno", rotulo: "Prospectando terreno" },
+                { valor: "terreno-sem-viabilidade", rotulo: "Terreno adquirido, sem estudo de viabilidade" },
+                { valor: "viabilidade-concluida", rotulo: "Estudo de viabilidade concluído" },
+                { valor: "projetos-iniciados", rotulo: "Projetos já iniciados" },
+              ],
+            },
+            {
+              campo: "size",
+              rotulo: "Qual o tamanho estimado do empreendimento?",
+              placeholder: "Selecione o tamanho",
+              opcoes: [
+                { valor: "ate-1000", rotulo: "Até 1.000 m² de construção" },
+                { valor: "1000-5000", rotulo: "De 1.000 m² a 5.000 m²" },
+                { valor: "5000-20000", rotulo: "De 5.000 m² a 20.000 m²" },
+                { valor: "acima-20000", rotulo: "Acima de 20.000 m²" },
+                { valor: "nao-definido", rotulo: "Ainda não está definido" },
+              ],
+            },
+          ],
+        },
+        {
+          valor: "construtor",
+          rotulo: "Construtor",
+          perguntas: [
+            {
+              campo: "role",
+              rotulo: "Qual seu cargo na construtora?",
+              placeholder: "Selecione seu cargo",
+              opcoes: [
+                { valor: "socio-diretor", rotulo: "Sócio ou diretor" },
+                { valor: "gerente-projetos", rotulo: "Gerente de projetos" },
+                { valor: "engenheiro-civil", rotulo: "Engenheiro civil" },
+                { valor: "arquiteto-coordenador", rotulo: "Arquiteto coordenador" },
+                { valor: "outro", rotulo: "Outro" },
+              ],
+            },
+            {
+              campo: "stage",
+              rotulo: "Em qual fase está o próximo empreendimento?",
+              placeholder: "Selecione a fase",
+              opcoes: [
+                { valor: "prospeccao-terreno", rotulo: "Prospectando terreno" },
+                { valor: "terreno-sem-projeto", rotulo: "Terreno adquirido, sem projeto" },
+                { valor: "projeto-desenvolvimento", rotulo: "Projeto em desenvolvimento" },
+                { valor: "obra-andamento", rotulo: "Obra já em andamento" },
+              ],
+            },
+            {
+              campo: "size",
+              rotulo: "Quantos empreendimentos sua construtora já entregou?",
+              placeholder: "Selecione",
+              opcoes: [
+                { valor: "primeiro", rotulo: "Este será o primeiro" },
+                { valor: "1-3", rotulo: "De 1 a 3" },
+                { valor: "4-10", rotulo: "De 4 a 10" },
+                { valor: "mais-10", rotulo: "Mais de 10" },
+              ],
+            },
+          ],
+        },
+        {
+          valor: "loteador",
+          rotulo: "Loteador ou desenvolvedor imobiliário",
+          perguntas: [
+            {
+              campo: "role",
+              rotulo: "Qual seu cargo na empresa?",
+              placeholder: "Selecione seu cargo",
+              opcoes: [
+                { valor: "socio-diretor", rotulo: "Sócio ou diretor" },
+                { valor: "gerente-projetos", rotulo: "Gerente de projetos" },
+                { valor: "engenheiro-arquiteto", rotulo: "Engenheiro ou arquiteto" },
+                { valor: "outro", rotulo: "Outro" },
+              ],
+            },
+            {
+              campo: "stage",
+              rotulo: "Em qual fase está o empreendimento?",
+              placeholder: "Selecione a fase",
+              opcoes: [
+                { valor: "prospeccao-area", rotulo: "Prospectando a área" },
+                { valor: "area-sem-estudo", rotulo: "Área adquirida, sem estudo" },
+                { valor: "estudo-concluido", rotulo: "Estudo de viabilidade concluído" },
+                { valor: "projeto-aprovacao", rotulo: "Projeto em aprovação" },
+              ],
+            },
+            {
+              campo: "size",
+              rotulo: "Qual o tamanho estimado da área?",
+              placeholder: "Selecione o tamanho",
+              opcoes: [
+                { valor: "ate-20000", rotulo: "Até 20.000 m² (2 hectares)" },
+                { valor: "20000-100000", rotulo: "De 20.000 m² a 100.000 m²" },
+                { valor: "100000-500000", rotulo: "De 100.000 m² a 500.000 m²" },
+                { valor: "acima-500000", rotulo: "Acima de 500.000 m²" },
+                { valor: "nao-definido", rotulo: "Ainda não está definido" },
+              ],
+            },
+          ],
+        },
+        {
+          valor: "investidor",
+          rotulo: "Investidor",
+          perguntas: [
+            {
+              campo: "role",
+              rotulo: "Como você participa dos empreendimentos?",
+              placeholder: "Selecione",
+              opcoes: [
+                { valor: "socio-investidor", rotulo: "Sou sócio investidor em incorporações" },
+                { valor: "invisto-terceiros", rotulo: "Invisto em empreendimentos de terceiros" },
+                { valor: "terreno-parceria", rotulo: "Tenho terreno e busco parceria" },
+                { valor: "estudando", rotulo: "Estou estudando começar a investir" },
+              ],
+            },
+            {
+              campo: "stage",
+              rotulo: "Em que momento você está?",
+              placeholder: "Selecione o momento",
+              opcoes: [
+                { valor: "oportunidade-agora", rotulo: "Avaliando uma oportunidade agora" },
+                { valor: "buscando-oportunidade", rotulo: "Buscando a próxima oportunidade" },
+                { valor: "estudando-mercado", rotulo: "Estudando o mercado" },
+                { valor: "planejamento-futuro", rotulo: "Planejamento para o próximo ano" },
+              ],
+            },
+            {
+              campo: "size",
+              rotulo: "Qual o volume que pretende investir?",
+              placeholder: "Selecione uma faixa",
+              opcoes: [
+                { valor: "ate-1mi", rotulo: "Até R$ 1 milhão" },
+                { valor: "1-5mi", rotulo: "De R$ 1 milhão a R$ 5 milhões" },
+                { valor: "5-20mi", rotulo: "De R$ 5 milhões a R$ 20 milhões" },
+                { valor: "acima-20mi", rotulo: "Acima de R$ 20 milhões" },
+                { valor: "nao-definido", rotulo: "Ainda não está definido" },
+              ],
+            },
+          ],
+        },
+        {
+          valor: "outro",
+          rotulo: "Outro",
+          perguntas: [
+            {
+              campo: "role",
+              rotulo: "Qual sua atuação?",
+              placeholder: "Selecione sua atuação",
+              opcoes: [
+                { valor: "arquiteto-projetista", rotulo: "Arquiteto ou projetista" },
+                { valor: "corretor-consultor", rotulo: "Corretor ou consultor imobiliário" },
+                { valor: "proprietario-terreno", rotulo: "Proprietário de terreno" },
+                { valor: "outra-area", rotulo: "Profissional de outra área" },
+                { valor: "estudante", rotulo: "Estudante" },
+              ],
+            },
+            {
+              campo: "stage",
+              rotulo: "O que te traz ao encontro?",
+              placeholder: "Selecione",
+              opcoes: [
+                { valor: "projeto-em-vista", rotulo: "Tenho um empreendimento em vista" },
+                { valor: "trabalho-setor", rotulo: "Trabalho com quem incorpora ou constrói" },
+                { valor: "aprender", rotulo: "Quero entender melhor o mercado" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   },
 };
