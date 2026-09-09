@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -14,25 +14,40 @@ import type { EventoConfig } from "@/eventos/tipos";
 
 const UFS = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
 
-const FAIXAS = [
-  "Entre R$ 100 mil e R$ 500 mil",
-  "Entre R$ 600 mil e R$ 800 mil",
-  "Entre R$ 800 mil e R$ 1,2 milhão",
-  "Entre R$ 1,2 milhão e R$ 2 milhões ou mais",
-] as const;
+type Pergunta = NonNullable<EventoConfig["formulario"]["qualificacao"]>[number];
 
-const schema = z.object({
+const sim_nao = [
+  { valor: "sim", rotulo: "Sim" },
+  { valor: "nao", rotulo: "Não" },
+];
+
+/** Etapa 2 dos eventos residenciais, usada por quem não define `qualificacao`. */
+const QUALIFICACAO_PADRAO: Pergunta[] = [
+  { campo: "hasLot", rotulo: "Já possui terreno?", opcoes: sim_nao },
+  { campo: "hasProject", rotulo: "Você já possui projeto arquitetônico?", opcoes: sim_nao },
+  {
+    campo: "investmentAmount",
+    rotulo: "Quanto você planeja investir na sua obra?",
+    opcoes: [
+      "Entre R$ 100 mil e R$ 500 mil",
+      "Entre R$ 600 mil e R$ 800 mil",
+      "Entre R$ 800 mil e R$ 1,2 milhão",
+      "Entre R$ 1,2 milhão e R$ 2 milhões ou mais",
+    ].map((v) => ({ valor: v, rotulo: v })),
+  },
+];
+
+const ETAPA_1 = ["name", "email", "phone", "city", "state"] as const;
+
+const CAMPOS_ETAPA_1 = {
   name: z.string().min(3, "Nome deve ter pelo menos 3 caracteres"),
   email: z.string().email("E-mail inválido"),
   phone: z.string().min(14, "Telefone incompleto"),
   city: z.string().min(2, "Informe a cidade"),
   state: z.string().min(2, "Selecione o estado"),
-  hasLot: z.enum(["sim", "nao"], { required_error: "Selecione uma opção" }),
-  hasProject: z.enum(["sim", "nao"], { required_error: "Selecione uma opção" }),
-  investmentAmount: z.enum(FAIXAS, { required_error: "Selecione uma faixa de investimento" }),
-});
-type Dados = z.infer<typeof schema>;
-const ETAPA_1 = ["name", "email", "phone", "city", "state"] as const;
+};
+
+type Dados = Record<string, string>;
 
 type Props = { evento: string; formulario: EventoConfig["formulario"]; tema: EventoConfig["tema"] };
 
@@ -42,6 +57,21 @@ export function RegistrationForm({ evento, formulario, tema }: Props) {
   const [etapa, setEtapa] = useState<1 | 2>(1);
   const cta = tema === "verde" ? "cta-green" : "hero";
   const ctaSuave = tema === "verde" ? "cta-green-soft" : "hero-outline";
+
+  const perguntas = formulario.qualificacao ?? QUALIFICACAO_PADRAO;
+  const schema = useMemo(
+    () =>
+      z.object({
+        ...CAMPOS_ETAPA_1,
+        ...Object.fromEntries(
+          perguntas.map((p) => [
+            p.campo,
+            z.enum(p.opcoes.map((o) => o.valor) as [string, ...string[]], { required_error: "Selecione uma opção" }),
+          ]),
+        ),
+      }),
+    [perguntas],
+  );
 
   const { register, handleSubmit, setValue, trigger, formState: { errors, isValid } } = useForm<Dados>({
     resolver: zodResolver(schema),
@@ -125,32 +155,23 @@ export function RegistrationForm({ evento, formulario, tema }: Props) {
 
         {etapa === 2 && (
           <>
-            {([["hasLot", "Já possui terreno?"], ["hasProject", "Você já possui projeto arquitetônico?"]] as const).map(([campoNome, rotulo]) => (
-              <div key={campoNome} className="space-y-2">
-                <Label className="text-sm text-foreground">{rotulo}</Label>
-                <RadioGroup onValueChange={(v) => setValue(campoNome, v as "sim" | "nao", { shouldValidate: true })} className="flex gap-6">
-                  {(["sim", "nao"] as const).map((v) => (
-                    <div key={v} className="flex items-center space-x-2">
-                      <RadioGroupItem value={v} id={`${campoNome}-${v}`} className="border-primary text-primary" />
-                      <Label htmlFor={`${campoNome}-${v}`} className="cursor-pointer text-sm text-foreground">{v === "sim" ? "Sim" : "Não"}</Label>
+            {perguntas.map((p) => (
+              <div key={p.campo} className="space-y-2">
+                <Label className="text-sm text-foreground">{p.rotulo}</Label>
+                <RadioGroup
+                  onValueChange={(v) => setValue(p.campo, v, { shouldValidate: true })}
+                  className={p.opcoes.length === 2 ? "flex gap-6" : "flex flex-col gap-2"}
+                >
+                  {p.opcoes.map((o) => (
+                    <div key={o.valor} className="flex items-start space-x-2">
+                      <RadioGroupItem value={o.valor} id={`${p.campo}-${o.valor}`} className="mt-0.5 shrink-0 border-primary text-primary" />
+                      <Label htmlFor={`${p.campo}-${o.valor}`} className="cursor-pointer text-sm leading-snug text-foreground">{o.rotulo}</Label>
                     </div>
                   ))}
                 </RadioGroup>
-                {errors[campoNome] && <p className="text-xs text-destructive">{errors[campoNome]?.message}</p>}
+                {errors[p.campo] && <p className="text-xs text-destructive">{errors[p.campo]?.message as string}</p>}
               </div>
             ))}
-            <div className="space-y-2">
-              <Label className="text-sm text-foreground">Quanto você planeja investir na sua obra?</Label>
-              <RadioGroup onValueChange={(v) => setValue("investmentAmount", v as (typeof FAIXAS)[number], { shouldValidate: true })} className="flex flex-col gap-2">
-                {FAIXAS.map((f, i) => (
-                  <div key={f} className="flex items-center space-x-2">
-                    <RadioGroupItem value={f} id={`faixa-${i}`} className="border-primary text-primary" />
-                    <Label htmlFor={`faixa-${i}`} className="cursor-pointer text-sm text-foreground">{f}</Label>
-                  </div>
-                ))}
-              </RadioGroup>
-              {errors.investmentAmount && <p className="text-xs text-destructive">{errors.investmentAmount.message}</p>}
-            </div>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row-reverse">
               <Button type="submit" variant={cta} size="lg" className="h-11 w-full rounded-full text-sm" disabled={!isValid || enviando}>
                 {enviando ? "Redirecionando..." : "CONFIRMAR INSCRIÇÃO"}

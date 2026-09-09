@@ -142,5 +142,42 @@ export const projetoAVenda: EventoConfig = {
     local: "Online e ao vivo · dúvidas respondidas na hora",
   },
   // PENDENTE (Gui): link do grupo do WhatsApp deste encontro; por ora, o mesmo dos outros
-  formulario: { titulo: "Garantir meu acesso gratuito", redirect: "https://chat.whatsapp.com/BxXxLl9oORFDK16nmeBaX7" },
+  formulario: {
+    titulo: "Garantir meu acesso gratuito",
+    redirect: "https://chat.whatsapp.com/BxXxLl9oORFDK16nmeBaX7",
+    // Condensado das perguntas das campanhas da Meta: quem decide, quando compra, quanto vale
+    qualificacao: [
+      {
+        campo: "role",
+        rotulo: "Qual seu cargo ou função na construtora/incorporadora?",
+        opcoes: [
+          { valor: "socio-diretor", rotulo: "Sócio ou diretor" },
+          { valor: "gerente-projetos", rotulo: "Gerente de projetos" },
+          { valor: "engenheiro-civil", rotulo: "Engenheiro civil" },
+          { valor: "arquiteto-coordenador", rotulo: "Arquiteto coordenador" },
+          { valor: "outro", rotulo: "Outro" },
+        ],
+      },
+      {
+        campo: "projectStage",
+        rotulo: "Em qual fase o empreendimento se encontra?",
+        opcoes: [
+          { valor: "prospeccao-terreno", rotulo: "Prospecção de terreno" },
+          { valor: "terreno-sem-viabilidade", rotulo: "Terreno adquirido, sem estudo de viabilidade" },
+          { valor: "viabilidade-concluida", rotulo: "Estudo de viabilidade concluído" },
+          { valor: "projetos-iniciados", rotulo: "Já possuo alguns projetos iniciados" },
+        ],
+      },
+      {
+        campo: "builtArea",
+        rotulo: "Qual a área estimada de construção (ATC)?",
+        opcoes: [
+          { valor: "ate-1000", rotulo: "Até 1.000 m²" },
+          { valor: "1000-5000", rotulo: "De 1.000 m² a 5.000 m²" },
+          { valor: "5000-20000", rotulo: "De 5.000 m² a 20.000 m²" },
+          { valor: "acima-20000", rotulo: "Acima de 20.000 m²" },
+        ],
+      },
+    ],
+  },
 };

@@ -108,5 +108,15 @@ export type EventoConfig = {
 
   cta: { titulo: Titulo; descricao: string; data: string; horario: string; local: string };
 
-  formulario: { titulo: string; redirect: string };
+  /**
+   * qualificacao: as perguntas da etapa 2 da inscrição. Sem ela valem as
+   * perguntas residenciais padrão (terreno, projeto, faixa de investimento).
+   * `campo` é a chave enviada ao webhook; duas opções ficam lado a lado, mais
+   * que isso vira lista.
+   */
+  formulario: {
+    titulo: string;
+    redirect: string;
+    qualificacao?: Array<{ campo: string; rotulo: string; opcoes: Array<{ valor: string; rotulo: string }> }>;
+  };
 };
