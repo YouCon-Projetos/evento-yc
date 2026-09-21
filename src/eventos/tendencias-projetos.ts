@@ -63,10 +63,9 @@ export const tendenciasProjetos: EventoConfig = {
       { icone: "Sofa", titulo: "Interiores e acabamentos", descricao: "Conheça referências e soluções para ambientes internos, acabamentos e detalhes que complementam a arquitetura da residência." },
     ],
   },
-  // A VSL ainda não existe: até o arquivo subir ao MinIO, o hero mostra "Vídeo em breve"
   video: {
-    src: null,
-    poster: null,
+    src: midia("tendencias/vsl-tendencias.mp4"),
+    poster: midia("tendencias/vsl-tendencias-poster.jpg"),
     legenda: "O que você vai ver nesta consultoria",
   },
   galeria: {
