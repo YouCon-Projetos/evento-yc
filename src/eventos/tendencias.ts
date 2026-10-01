@@ -19,14 +19,14 @@ export const tendenciasProjetos: EventoConfig = {
   meta: {
     titulo: "Tendências e Soluções para o Projeto de Alto Padrão | YouCon",
     descricao:
-      "Consultoria gratuita e ao vivo com o arquiteto Thiago Cardim: tendências, referências e soluções em arquitetura, fachadas, plantas, interiores e acabamentos, com projetos reais da YouCon. 22 de outubro às 20h.",
+      "Consultoria gratuita e ao vivo com o arquiteto Thiago Cardim: tendências, referências e soluções em arquitetura, fachadas, plantas, interiores e acabamentos, com projetos reais da YouCon. 22/10 às 20h.",
     ogTitulo: "Tendências e Projetos",
   },
   banner: {
     antes: "Consultoria gratuita e ao vivo em:",
     depois: "A consultoria já começou!",
     dataIso: "2026-10-22T20:00:00-03:00",
-    rotuloData: "22/10/2026 às 20h",
+    rotuloData: "22/10 às 20h",
   },
   hero: {
     tag: "Convite exclusivo YouCon",
@@ -45,7 +45,7 @@ export const tendenciasProjetos: EventoConfig = {
     rodape: "Vagas limitadas",
   },
   destaques: [
-    { valor: "22.10", rotulo: "quinta-feira, às 20h" },
+    { valor: "22/10", rotulo: "quinta-feira, às 20h" },
     { valor: "Online", rotulo: "call fechada no Google Meet" },
     { valor: "Gratuito", rotulo: "com dúvidas respondidas ao vivo" },
   ],
