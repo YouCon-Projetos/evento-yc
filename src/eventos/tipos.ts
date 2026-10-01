@@ -53,6 +53,8 @@ export type EventoConfig = {
     cta: string;
     rodape: string;
     provaSocial?: string;
+    /** Etiquetas dos temas que flutuam ao redor do vídeo (v2, até 4) */
+    temas?: string[];
   };
 
   /**

@@ -98,6 +98,15 @@
   }
 }
 
+/* Etiquetas de tema ao redor da VSL: sobem e descem de leve */
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+.animate-flutuar {
+  animation: flutuar 6s ease-in-out infinite;
+}
+
 @keyframes pulseGlow {
   0%, 100% { box-shadow: 0 0 20px hsl(25 100% 50% / 0.4); }
   50% { box-shadow: 0 0 40px hsl(25 100% 50% / 0.6); }

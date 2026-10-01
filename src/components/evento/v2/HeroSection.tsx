@@ -11,6 +11,14 @@ import { HeroVideo } from "./HeroVideo";
 
 const irAoFormulario = () => document.getElementById("cta-section")?.scrollIntoView({ behavior: "smooth" });
 
+/** Onde cada etiqueta fica em volta do vídeo, na ordem em que vêm nos dados. */
+const POSICOES = [
+  "-top-5 -left-10 lg:-left-14",
+  "top-[26%] -right-12 lg:-right-20",
+  "bottom-[30%] -left-12 lg:-left-16",
+  "-bottom-5 -right-8 lg:-right-14",
+];
+
 type Props = { hero: EventoConfig["hero"]; tema: EventoConfig["tema"]; video?: EventoConfig["video"]; quando: string };
 
 /**
@@ -57,7 +65,7 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
       </header>
 
       <div className="relative z-10 flex flex-1 items-center px-6 pt-8 md:px-10 md:pt-0 lg:px-12">
-        <div className="mx-auto flex w-full max-w-[1180px] flex-col items-start gap-12 md:flex-row md:items-center md:gap-10 lg:gap-14">
+        <div className="mx-auto flex w-full max-w-[1180px] flex-col items-start gap-12 md:flex-row md:items-center md:gap-14 lg:gap-20">
           <div className="flex flex-col items-start gap-6 md:max-w-[32rem] md:gap-7 lg:max-w-[34rem]">
             <span className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-primary">{hero.tag}</span>
 
@@ -103,8 +111,20 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
           </div>
 
           {video && (
-            <div className="hidden shrink-0 md:block">
+            <div className="relative hidden shrink-0 md:block">
               <HeroVideo {...video} />
+
+              {/* Cantos escolhidos para não cobrir o play nem invadir o texto */}
+              {(hero.temas ?? []).slice(0, 4).map((tema, i) => (
+                <span
+                  key={tema}
+                  style={{ animationDelay: `${i * 1.4}s` }}
+                  className={`motion-safe:animate-flutuar absolute z-20 inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-white/15 bg-black/55 px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground shadow-lg shadow-black/40 backdrop-blur-md ${POSICOES[i]}`}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_hsl(var(--primary))]" />
+                  {tema}
+                </span>
+              ))}
             </div>
           )}
         </div>

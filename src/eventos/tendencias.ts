@@ -39,6 +39,7 @@ export const tendenciasProjetos: EventoConfig = {
     imagemMobile: midia("tendencias/hero.jpg"),
     cta: "Quero participar gratuitamente",
     provaSocial: "+50 pessoas já se inscreveram",
+    temas: ["Fachadas", "Plantas", "Interiores", "Acabamentos"],
     rodape: "Vagas limitadas",
   },
   destaques: [
