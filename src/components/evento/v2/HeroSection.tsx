@@ -88,7 +88,7 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
               </div>
             )}
 
-            <div className="mt-1 flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+            <div className="mt-1 flex w-full flex-col items-center gap-4 sm:flex-row sm:items-center sm:gap-6">
               <Button
                 variant={tema === "verde" ? "cta-green" : "hero"}
                 size="xl"
@@ -98,7 +98,7 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
                 {hero.cta.toUpperCase()}
               </Button>
 
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col items-center gap-1 text-center sm:items-start sm:text-left">
                 {hero.provaSocial && (
                   <span className="inline-flex items-center gap-2 whitespace-nowrap text-[13px] font-semibold text-primary">
                     <Users className="h-3.5 w-3.5" />
