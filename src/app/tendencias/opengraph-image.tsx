@@ -1,4 +1,4 @@
-import { tendenciasProjetos } from "@/eventos/tendencias-projetos";
+import { tendenciasProjetos } from "@/eventos/tendencias";
 import { imagemOg, OG_TAMANHO, OG_TIPO } from "@/lib/og";
 
 export const alt = tendenciasProjetos.meta.titulo;

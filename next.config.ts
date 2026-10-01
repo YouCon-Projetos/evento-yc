@@ -18,6 +18,8 @@ const nextConfig: NextConfig = {
       { source: "/aniversario", destination: "/", permanent: false },
       { source: "/treinamento-imagens-ia", destination: "/", permanent: false },
       { source: "/projetos", destination: "/", permanent: false },
+      // Endereço antigo da consultoria de tendências, trocado em 01/10/2026
+      { source: "/tendencias-projetos", destination: "/tendencias", permanent: true },
       { source: "/incorporacao-presencial", destination: "/incorp2026", permanent: false },
     ];
   },

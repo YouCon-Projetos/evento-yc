@@ -12,8 +12,9 @@ const PLACEHOLDER_HERO_DESKTOP = midia("img/bg-desktop.jpg");
 const PLACEHOLDER_HERO_MOBILE = midia("img/bg-mobile.jpg");
 
 export const tendenciasProjetos: EventoConfig = {
-  slug: "tendencias-projetos",
+  slug: "tendencias",
   layout: "v2",
+  // Continua "tendencias-projetos": é o identificador que o CRM já recebeu
   webhookEvento: "tendencias-projetos",
   tema: "verde",
   meta: {
