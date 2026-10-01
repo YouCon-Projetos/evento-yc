@@ -1,52 +1,80 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { Play } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Play, Volume2 } from "lucide-react";
 
 type Props = { src: string | null; poster: string | null; legenda?: string };
 
 /**
- * VSL vertical do hero (v2). Sem autoplay: o convite é o botão grande sobre o
- * pôster, que some no primeiro play e dá lugar aos controles nativos.
+ * VSL vertical do hero. Toca sozinha, muda e em laço, que é o que os
+ * navegadores permitem sem gesto do visitante. O convite visível é para
+ * ligar o som: ao aceitar, o vídeo recomeça do zero, sai do laço e passa a
+ * mostrar os controles nativos. Sem src, mostra o aviso de "em breve".
  */
 export function HeroVideo({ src, poster, legenda }: Props) {
   const ref = useRef<HTMLVideoElement>(null);
-  const [tocou, setTocou] = useState(false);
+  const [comSom, setComSom] = useState(false);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    // O atributo precisa estar valendo antes do play, senão a política de
+    // autoplay recusa e o vídeo fica parado no pôster.
+    v.muted = true;
+    v.play().catch(() => {
+      /* bloqueado mesmo assim: fica o pôster, e o botão continua servindo */
+    });
+  }, []);
+
+  const ligarSom = () => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = false;
+    v.loop = false;
+    v.currentTime = 0;
+    v.play().catch(() => {});
+    setComSom(true);
+  };
 
   return (
-    <div className="relative mx-auto w-full max-w-[260px] overflow-hidden rounded-[1.5rem] border border-white/15 shadow-[0_40px_80px_rgba(0,0,0,0.6)] sm:max-w-[280px] lg:max-w-[300px]">
+    <div className="relative mx-auto w-full max-w-[240px] overflow-hidden rounded-[1.5rem] border border-white/15 shadow-[0_40px_80px_rgba(0,0,0,0.6)] sm:max-w-[260px] lg:max-w-[270px]">
       <div className="relative aspect-[9/16] bg-card">
         {src ? (
           <>
             <video
               ref={ref}
-              controls
+              autoPlay
+              muted
+              loop
               playsInline
-              preload="metadata"
+              preload="auto"
+              controls={comSom}
               poster={poster ?? undefined}
-              onPlay={() => setTocou(true)}
               className="h-full w-full object-cover"
             >
               <source src={src} type="video/mp4" />
               Seu navegador não suporta a reprodução de vídeo.
             </video>
-            {!tocou && (
+
+            {!comSom && (
               <button
                 type="button"
-                aria-label="Reproduzir vídeo"
-                onClick={() => ref.current?.play()}
-                className="group absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-t from-black/75 via-black/10 to-black/30"
+                aria-label="Ouvir o vídeo com som, desde o começo"
+                onClick={ligarSom}
+                className="group absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-t from-black/75 via-transparent to-black/25"
               >
-                <span className="relative flex h-16 w-16 items-center justify-center md:h-[72px] md:w-[72px]">
+                <span className="relative flex h-14 w-14 items-center justify-center md:h-16 md:w-16">
                   <span className="absolute inset-0 rounded-full bg-primary/40 motion-safe:animate-ping" aria-hidden="true" />
                   <span className="bg-orange-gradient glow-box relative flex h-full w-full items-center justify-center rounded-full ring-2 ring-white/25 transition-transform duration-300 group-hover:scale-105">
-                    <Play className="ml-1 h-7 w-7 text-white md:h-8 md:w-8" fill="currentColor" strokeWidth={0} />
+                    <Volume2 className="h-6 w-6 text-white md:h-7 md:w-7" strokeWidth={2.2} />
                   </span>
                 </span>
+                <span className="mt-3 rounded-full bg-black/55 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white backdrop-blur-sm">
+                  Ouvir com som
+                </span>
                 {legenda && (
-                  <span className="absolute inset-x-4 bottom-4 flex flex-col gap-1 text-left">
-                    <span className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-primary">Assista</span>
-                    <span className="font-display text-sm font-bold leading-snug text-white drop-shadow md:text-[15px]">{legenda}</span>
+                  <span className="absolute inset-x-4 bottom-4 text-left font-display text-sm font-bold leading-snug text-white drop-shadow">
+                    {legenda}
                   </span>
                 )}
               </button>
