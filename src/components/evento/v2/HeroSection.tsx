@@ -65,8 +65,8 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
       </header>
 
       <div className="relative z-10 flex flex-1 items-center px-6 pt-8 md:px-10 md:pt-0 lg:px-12">
-        <div className="mx-auto flex w-full max-w-[1180px] flex-col items-start gap-12 md:flex-row md:items-center md:justify-between md:gap-16 lg:gap-20">
-          <div className="flex flex-col items-start gap-6 md:max-w-[30rem] md:gap-7 lg:max-w-[34rem]">
+        <div className="mx-auto flex w-full max-w-[1180px] flex-col items-start gap-12 md:flex-row md:items-center md:justify-center md:gap-10 lg:gap-12">
+          <div className="flex flex-col items-start gap-6 md:max-w-[30rem] md:gap-7 lg:max-w-[33rem]">
             <span className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-primary">{hero.tag}</span>
 
             <h1 className="font-display max-w-[20rem] text-[28px] font-extrabold leading-[1.08] tracking-[-0.03em] text-foreground text-pretty sm:max-w-[28rem] sm:text-[34px] md:max-w-[26rem] md:text-[34px] lg:max-w-[32rem] lg:text-[40px] xl:max-w-[36rem] xl:text-[44px]">
@@ -100,12 +100,12 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
 
               <div className="flex flex-col gap-1">
                 {hero.provaSocial && (
-                  <span className="inline-flex items-center gap-2 text-[13px] font-semibold text-primary">
+                  <span className="inline-flex items-center gap-2 whitespace-nowrap text-[13px] font-semibold text-primary">
                     <Users className="h-3.5 w-3.5" />
                     {hero.provaSocial}
                   </span>
                 )}
-                {hero.rodape && <span className="text-[12px] text-muted-foreground">{hero.rodape}</span>}
+                {hero.rodape && <span className="whitespace-nowrap text-[12px] text-muted-foreground">{hero.rodape}</span>}
               </div>
             </div>
           </div>

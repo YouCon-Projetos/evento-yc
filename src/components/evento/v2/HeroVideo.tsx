@@ -66,7 +66,7 @@ export function HeroVideo({ src, poster }: Props) {
                 onClick={ligarSom}
                 className="group absolute inset-0 flex items-end justify-center pb-4"
               >
-                <span className="bg-orange-gradient inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-lg shadow-black/50 ring-1 ring-white/25 transition-transform duration-300 group-hover:scale-105">
+                <span className="inline-flex items-center gap-2 rounded-full bg-black/30 px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-lg shadow-black/40 ring-1 ring-white/30 backdrop-blur-md transition-all duration-300 group-hover:bg-black/45 group-hover:scale-105">
                   <Volume2 className="h-4 w-4" strokeWidth={2.4} />
                   Ouvir com som
                 </span>
