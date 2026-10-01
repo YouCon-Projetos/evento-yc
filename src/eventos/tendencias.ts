@@ -4,12 +4,8 @@ import type { EventoConfig } from "./tipos";
 /**
  * Consultoria "Tendências, referências e soluções para o projeto de alto
  * padrão", 22/10/2026 às 20h, só com o Thiago. Copy de 07/09/2026.
- *
- * PENDENTE (Gui): fotos do hero e da galeria. Até chegarem, as imagens
- * abaixo são placeholders reaproveitados de outros eventos no MinIO.
+ * Fotos de projetos da YouCon em tendencias/ no MinIO, desde 01/10/2026.
  */
-const PLACEHOLDER_HERO_DESKTOP = midia("img/bg-desktop.jpg");
-const PLACEHOLDER_HERO_MOBILE = midia("img/bg-mobile.jpg");
 
 export const tendenciasProjetos: EventoConfig = {
   slug: "tendencias",
@@ -38,8 +34,9 @@ export const tendenciasProjetos: EventoConfig = {
       { texto: "projetos reais", destaque: true },
       { texto: " desenvolvidos pela YouCon. Além do conteúdo, você poderá tirar suas dúvidas diretamente com um arquiteto durante o encontro." },
     ],
-    imagemDesktop: PLACEHOLDER_HERO_DESKTOP,
-    imagemMobile: PLACEHOLDER_HERO_MOBILE,
+    imagemDesktop: midia("tendencias/hero.jpg"),
+    // A mesma foto: o recorte central segura bem o retrato do celular
+    imagemMobile: midia("tendencias/hero.jpg"),
     cta: "Quero participar gratuitamente",
     provaSocial: "+50 pessoas já se inscreveram",
     rodape: "Vagas limitadas",
@@ -75,24 +72,22 @@ export const tendenciasProjetos: EventoConfig = {
       "Mais do que referências genéricas, você poderá visualizar como diferentes soluções são pensadas e aplicadas em residências de alto padrão.",
     ],
     chamada: "Explore alguns dos projetos desenvolvidos pela YouCon:",
-    // Placeholders: trocar pelas fotos dos projetos (ideal 3:4, ~900×1200) em tendencias/ no MinIO
     itens: [
-      { nome: "Projeto YouCon 01", legenda: "Fachada e volumetria", foto: midia("img/metalica-hero-desktop.jpg"), alt: "Fachada de residência de alto padrão" },
-      { nome: "Projeto YouCon 02", legenda: "Integração dos ambientes", foto: midia("img/bg-desktop.jpg"), alt: "Ambientes integrados de residência" },
-      { nome: "Projeto YouCon 03", legenda: "Interiores e acabamentos", foto: midia("img/inc-hero-desktop.jpg"), alt: "Interior de residência de alto padrão" },
-      { nome: "Projeto YouCon 04", legenda: "Fachada noturna", foto: midia("img/metalica-hero-mobile.jpg"), alt: "Fachada iluminada à noite" },
-      { nome: "Projeto YouCon 05", legenda: "Planta e distribuição", foto: midia("img/bg-mobile.jpg"), alt: "Vista da planta e distribuição dos ambientes" },
-      { nome: "Projeto YouCon 06", legenda: "Área externa e paisagismo", foto: midia("img/inc-hero-mobile.jpg"), alt: "Área externa com paisagismo" },
-      { nome: "Projeto YouCon 07", legenda: "Detalhes e materiais", foto: midia("img/pocos-evento.webp"), alt: "Detalhes de materiais e acabamentos" },
-      { nome: "Projeto YouCon 08", legenda: "Vãos e estrutura", foto: midia("metalica/vsl-metalica-poster.jpg"), alt: "Estrutura e vãos livres de residência" },
+      { nome: "Volumes e vidro", legenda: "Fachada contemporânea ao entardecer", foto: midia("tendencias/g1.jpg"), alt: "Fachada contemporânea iluminada ao entardecer" },
+      { nome: "Sobrado em esquina", legenda: "Três pavimentos com varandas e madeira", foto: midia("tendencias/g2.jpg"), alt: "Sobrado de três pavimentos iluminado à noite" },
+      { nome: "Casa térrea integrada", legenda: "Garagem aberta e acesso com paisagismo", foto: midia("tendencias/g3.jpg"), alt: "Casa térrea com garagem aberta e jardim no acesso" },
+      { nome: "Pedra na fachada", legenda: "Revestimento que dá textura ao volume", foto: midia("tendencias/g4.jpg"), alt: "Fachada com revestimento em pedra e sacada" },
+      { nome: "Linhas horizontais", legenda: "Pedra natural e paisagismo tropical", foto: midia("tendencias/g5.jpg"), alt: "Casa de linhas horizontais com paisagismo tropical" },
+      { nome: "Arquitetura clássica", legenda: "Simetria e detalhes em fachada clara", foto: midia("tendencias/g6.jpg"), alt: "Fachada clássica clara com acesso central" },
+      { nome: "Casa de campo", legenda: "Telhado aparente, madeira e vista aberta", foto: midia("tendencias/g7.jpg"), alt: "Casa de campo com telhado aparente e vista para as montanhas" },
+      { nome: "Fachada ripada", legenda: "Madeira vertical e iluminação embutida", foto: midia("tendencias/g8.jpg"), alt: "Fachada ripada em madeira iluminada ao entardecer" },
     ],
     fecho: ["Arquitetura pensada nos detalhes.", "Soluções desenvolvidas para cada projeto."],
   },
   publico: {
     titulo: { antes: "Essa consultoria é para você que está ", destaque: "pensando no projeto da sua casa", depois: "." },
     subtitulo: "Independentemente da fase em que você está, o encontro foi pensado para ampliar seu repertório e apresentar novas possibilidades para o seu projeto.",
-    // PENDENTE (Gui): foto de um projeto YouCon para o fundo desta seção
-    imagemFundo: midia("img/metalica-hero-desktop.jpg"),
+    imagemFundo: midia("tendencias/fundo-publico.jpg"),
     cta: "Quero participar gratuitamente",
     itens: [
       { icone: "Landmark", titulo: "Já tem o terreno", descricao: "E quer começar a entender os caminhos possíveis para a arquitetura da sua futura casa." },
