@@ -14,8 +14,7 @@ const PLACEHOLDER_HERO_MOBILE = midia("img/bg-mobile.jpg");
 export const tendenciasProjetos: EventoConfig = {
   slug: "tendencias",
   layout: "v2",
-  // Continua "tendencias-projetos": é o identificador que o CRM já recebeu
-  webhookEvento: "tendencias-projetos",
+  webhookEvento: "tendencias",
   tema: "verde",
   meta: {
     titulo: "Tendências e Soluções para o Projeto de Alto Padrão | YouCon",
