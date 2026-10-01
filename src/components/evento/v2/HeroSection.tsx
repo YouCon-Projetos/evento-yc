@@ -65,7 +65,7 @@ export function HeroSection({ hero, tema, video, quando }: Props) {
       </header>
 
       <div className="relative z-10 flex flex-1 items-center px-6 pt-8 md:px-10 md:pt-0 lg:px-12">
-        <div className="mx-auto flex w-full max-w-[1180px] flex-col items-start gap-12 md:flex-row md:items-center md:justify-center md:gap-24 lg:gap-32">
+        <div className="mx-auto flex w-full max-w-[1180px] flex-col items-start gap-12 md:flex-row md:items-center md:justify-center md:gap-28 lg:gap-40">
           <div className="flex flex-col items-start gap-6 md:max-w-[30rem] md:gap-7 lg:max-w-[33rem]">
             <span className="font-display text-[10px] font-bold uppercase tracking-[0.22em] text-primary">{hero.tag}</span>
 
