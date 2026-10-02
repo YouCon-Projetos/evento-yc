@@ -42,7 +42,12 @@ export type EventoConfig = {
    */
   meta: { titulo: string; descricao: string; ogImage?: string; ogTitulo?: string };
 
-  banner: { antes: string; depois: string; dataIso: string; rotuloData: string };
+  /**
+   * aConfirmar: evento adiado e sem data nova. A faixa do topo mostra só o
+   * texto (sem contagem), a raiz não manda para ele e a arte de compartilhamento
+   * troca "DIA 08/10" por "NOVA DATA EM BREVE". dataIso fica com a data antiga.
+   */
+  banner: { antes: string; depois: string; dataIso: string; rotuloData: string; aConfirmar?: boolean };
 
   hero: {
     tag: string;

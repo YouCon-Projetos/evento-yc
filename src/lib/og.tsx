@@ -63,7 +63,7 @@ export async function imagemOg(evento: EventoConfig) {
               {titulo}
             </div>
             <div style={{ display: "flex", marginTop: 26, color: LARANJA, fontSize: 38, fontWeight: 800, letterSpacing: 16, textTransform: "uppercase" }}>
-              {`DIA ${diaMes(evento.banner.rotuloData)}`}
+              {evento.banner.aConfirmar ? "NOVA DATA EM BREVE" : `DIA ${diaMes(evento.banner.rotuloData)}`}
             </div>
           </div>
 

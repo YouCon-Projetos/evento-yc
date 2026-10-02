@@ -2,7 +2,8 @@ import { midia } from "@/lib/midia";
 import type { EventoConfig } from "./tipos";
 
 /**
- * Encontro "Do Projeto à Venda", 08/10/2026 às 20h, só com o Thiago. Reaproveita
+ * Encontro "Do Projeto à Venda", só com o Thiago. Era 08/10/2026 às 20h; em
+ * 02/10/2026 foi adiado sem data nova (banner.aConfirmar). Reaproveita
  * o slug /incorporacao do workshop de 07/2026 (config antiga em arquivo/). Copy de
  * 09/09/2026. Mesma estrutura do evento de tendências (layout v2).
  *
@@ -20,14 +21,15 @@ export const projetoAVenda: EventoConfig = {
   meta: {
     titulo: "Do Projeto à Venda | YouCon",
     descricao:
-      "Encontro online e gratuito com o arquiteto Thiago Cardim: como decisões de implantação, plantas, tipologias e fachada definem o produto imobiliário e o potencial comercial do empreendimento. 8 de outubro às 20h.",
+      "Encontro online e gratuito com o arquiteto Thiago Cardim: como decisões de implantação, plantas, tipologias e fachada definem o produto imobiliário e o potencial comercial do empreendimento. Nova data em breve.",
     ogTitulo: "Do Projeto à Venda",
   },
   banner: {
-    antes: "Encontro gratuito e ao vivo em:",
+    antes: "Encontro reagendado: nova data em breve",
     depois: "O encontro já começou!",
     dataIso: "2026-10-08T20:00:00-03:00",
-    rotuloData: "08/10/2026 às 20h",
+    rotuloData: "Nova data em breve",
+    aConfirmar: true,
   },
   hero: {
     tag: "Convite exclusivo YouCon",
@@ -45,7 +47,7 @@ export const projetoAVenda: EventoConfig = {
     rodape: "Vagas limitadas",
   },
   destaques: [
-    { valor: "08.10", rotulo: "quinta-feira, às 20h" },
+    { valor: "Em breve", rotulo: "nova data a confirmar" },
     { valor: "Online", rotulo: "ao vivo, com dúvidas respondidas" },
     { valor: "Gratuito", rotulo: "vagas limitadas" },
   ],
@@ -119,7 +121,7 @@ export const projetoAVenda: EventoConfig = {
     paragrafos: [
       "Este é um encontro para quem entende que o projeto não é apenas uma etapa técnica.",
       "É nele que são tomadas decisões que impactam diretamente o produto, a percepção de valor, a eficiência da obra e o potencial comercial do empreendimento.",
-      "No dia 08/10, às 20h, Thiago Cardim vai conduzir uma conversa prática, com projetos reais e espaço para perguntas ao vivo.",
+      "Na nova data, que divulgamos em breve, Thiago Cardim vai conduzir uma conversa prática, com projetos reais e espaço para perguntas ao vivo.",
     ],
   },
   hosts: {
@@ -136,9 +138,9 @@ export const projetoAVenda: EventoConfig = {
   },
   cta: {
     titulo: { antes: "Antes de lançar seu próximo empreendimento, entenda o impacto que o projeto pode ter no ", destaque: "produto que você vai vender", depois: "." },
-    descricao: "Participe gratuitamente do encontro online e ao vivo no dia 08/10, às 20h. Thiago Cardim vai mostrar, com projetos reais da YouCon, como decisões de implantação, plantas, tipologias, fachada e áreas comuns definem o produto imobiliário — e o quanto o mercado está disposto a pagar por ele. As dúvidas serão respondidas ao vivo.",
-    data: "08/10",
-    horario: "20h",
+    descricao: "Garanta sua vaga no encontro online, gratuito e ao vivo: a nova data sai em breve e você recebe o aviso. Thiago Cardim vai mostrar, com projetos reais da YouCon, como decisões de implantação, plantas, tipologias, fachada e áreas comuns definem o produto imobiliário — e o quanto o mercado está disposto a pagar por ele. As dúvidas serão respondidas ao vivo.",
+    data: "Em breve",
+    horario: "a confirmar",
     local: "Online e ao vivo · dúvidas respondidas na hora",
   },
   // PENDENTE (Gui): link do grupo do WhatsApp deste encontro; por ora, o mesmo dos outros

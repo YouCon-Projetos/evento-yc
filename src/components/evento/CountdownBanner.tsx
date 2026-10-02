@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from "react";
 
-type Props = { antes: string; depois: string; dataIso: string; rotuloData: string };
+type Props = { antes: string; depois: string; dataIso: string; rotuloData: string; aConfirmar?: boolean };
 
 const dois = (n: number) => String(n).padStart(2, "0");
 
 /**
  * Contagem regressiva fixa no topo. Começa nula e só calcula depois de
  * montar: no servidor não há "agora" confiável, e um valor diferente no
- * cliente daria erro de hidratação.
+ * cliente daria erro de hidratação. Evento adiado (aConfirmar) mostra só o
+ * texto de "antes", sem contagem.
  */
-export function CountdownBanner({ antes, depois, dataIso, rotuloData }: Props) {
+export function CountdownBanner({ antes, depois, dataIso, rotuloData, aConfirmar }: Props) {
   const alvo = new Date(dataIso).getTime();
   const [restante, setRestante] = useState<number | null>(null);
 
@@ -29,7 +30,7 @@ export function CountdownBanner({ antes, depois, dataIso, rotuloData }: Props) {
     [Math.floor((s % 3600) / 60), "Min"],
     [s % 60, "Seg"],
   ] as const;
-  const comecou = restante !== null && restante <= 0;
+  const comecou = !aConfirmar && restante !== null && restante <= 0;
 
   return (
     <div className="fixed left-0 right-0 top-0 z-50 bg-orange-gradient text-white shadow-md backdrop-blur-sm">
@@ -37,7 +38,7 @@ export function CountdownBanner({ antes, depois, dataIso, rotuloData }: Props) {
         <p className="text-[10px] font-semibold uppercase tracking-wide sm:text-xs md:text-sm">
           {comecou ? depois : antes}
         </p>
-        {!comecou && (
+        {!comecou && !aConfirmar && (
           <div className="grid grid-cols-4 gap-1 sm:gap-1.5" aria-label={`Contagem regressiva para ${rotuloData}`}>
             {partes.map(([v, rotulo]) => (
               <div key={rotulo} className="min-w-[42px] rounded bg-black/15 px-1.5 py-1 leading-none md:min-w-[52px] md:px-2">
