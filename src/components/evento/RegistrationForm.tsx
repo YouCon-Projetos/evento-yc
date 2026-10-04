@@ -7,7 +7,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { enviarInscricao } from "@/lib/inscricao";
+import { copiarParaOYouHub, enviarInscricao } from "@/lib/inscricao";
 import { trackLead } from "@/lib/pixel";
 import type { EventoConfig, Pergunta } from "@/eventos/tipos";
 
@@ -131,6 +131,7 @@ export function RegistrationForm({ evento, formulario, tema }: Props) {
     // respostas antigas no formulário, e elas não podem ir para o CRM.
     const campos = [...camposEtapa1, ...perguntas.map((p) => p.campo)];
     const inscricao = Object.fromEntries(campos.map((c) => [c, dados[c]]));
+    copiarParaOYouHub({ ...inscricao, evento });
     try {
       await enviarInscricao({ ...inscricao, evento });
     } catch (e) {

@@ -13,6 +13,33 @@ const URL =
   "https://webhook.lp-youconprojetos.com.br/webhook/eventos-youcon";
 const AUTH = process.env.NEXT_PUBLIC_INSCRICAO_AUTH ?? "admin:123456";
 
+const YOUHUB =
+  process.env.NEXT_PUBLIC_YOUHUB_INSCRICAO ??
+  "https://youhub-dun.vercel.app/api/eventos/inscricao";
+
+/**
+ * Cópia da inscrição para o YouHub (é de lá que sai o número de inscritos do
+ * painel). Vai ao lado do envio ao n8n, que não muda: não espera resposta, o
+ * keepalive termina o envio mesmo com a ida ao grupo, e qualquer erro é
+ * ignorado. Leva a página e as UTMs, que o n8n não recebe.
+ */
+export function copiarParaOYouHub(dados: Record<string, unknown>) {
+  try {
+    const utm = Object.fromEntries(
+      [...new URLSearchParams(window.location.search)].filter(([k]) => /^utm_|^(fbclid|gclid)$/.test(k)),
+    );
+    void fetch(YOUHUB, {
+      method: "POST",
+      mode: "no-cors",
+      keepalive: true,
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ ...dados, url: window.location.href, utm }),
+    }).catch(() => {});
+  } catch {
+    // Nunca atrapalha a inscrição.
+  }
+}
+
 export async function enviarInscricao(dados: Record<string, unknown>) {
   const resp = await fetch(URL, {
     method: "POST",
