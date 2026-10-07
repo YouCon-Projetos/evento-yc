@@ -20,14 +20,14 @@ const sim_nao = [
 
 /**
  * Etapa 2 dos eventos residenciais, usada por quem não define `perfil` nem `qualificacao`.
- * Os nomes dos campos são os de sempre (o n8n lê hasLot, hasProject e
- * investmentAmount); os valores seguem o padrão do formulário do site desde
- * 07/10/2026: projeto `arquitetonico`/`nao` e as mesmas 5 faixas de investimento.
+ * Campos e valores seguem o padrão de todos os formulários (YouHub ›
+ * Formulários › IDs e valores) desde 07/10/2026: possui_terreno,
+ * possui_projeto (`arquitetonico`/`nao`) e investimento nas mesmas 5 faixas.
  */
 const QUALIFICACAO_PADRAO: Pergunta[] = [
-  { campo: "hasLot", rotulo: "Já possui terreno?", placeholder: "Selecione", opcoes: sim_nao },
+  { campo: "possui_terreno", rotulo: "Já possui terreno?", placeholder: "Selecione", opcoes: sim_nao },
   {
-    campo: "hasProject",
+    campo: "possui_projeto",
     rotulo: "Você já possui projeto arquitetônico?",
     placeholder: "Selecione",
     opcoes: [
@@ -36,7 +36,7 @@ const QUALIFICACAO_PADRAO: Pergunta[] = [
     ],
   },
   {
-    campo: "investmentAmount",
+    campo: "investimento",
     rotulo: "Quanto você planeja investir na sua obra?",
     placeholder: "Selecione uma faixa",
     opcoes: [
@@ -50,11 +50,11 @@ const QUALIFICACAO_PADRAO: Pergunta[] = [
 ];
 
 const CAMPOS_ETAPA_1 = {
-  name: z.string().min(3, "Nome deve ter pelo menos 3 caracteres"),
+  nome: z.string().min(3, "Nome deve ter pelo menos 3 caracteres"),
   email: z.string().email("E-mail inválido"),
-  phone: z.string().min(14, "Telefone incompleto"),
-  city: z.string().min(2, "Informe a cidade"),
-  state: z.string().min(2, "Selecione o estado"),
+  telefone: z.string().min(14, "Telefone incompleto"),
+  cidade: z.string().min(2, "Informe a cidade"),
+  estado: z.string().min(2, "Selecione o estado"),
 };
 
 const umaDasOpcoes = (p: Pergunta) =>
@@ -107,7 +107,7 @@ export function RegistrationForm({ evento, formulario, tema }: Props) {
   }, [perfil, formulario.qualificacao, perfilEscolhido]);
 
   const camposEtapa1 = useMemo(
-    () => ["name", "email", "phone", "city", "state", ...(perfil ? [perfil.campo] : [])],
+    () => ["nome", "email", "telefone", "cidade", "estado", ...(perfil ? [perfil.campo] : [])],
     [perfil],
   );
 
@@ -126,7 +126,7 @@ export function RegistrationForm({ evento, formulario, tema }: Props) {
   const { register, handleSubmit, setValue, trigger, formState: { errors, isValid } } = useForm<Dados>({
     resolver: zodResolver(schema),
     mode: "onChange",
-    defaultValues: { name: "", email: "", phone: "", city: "", state: "" },
+    defaultValues: { nome: "", email: "", telefone: "", cidade: "", estado: "" },
   });
 
   const mascaraTelefone = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,7 +134,7 @@ export function RegistrationForm({ evento, formulario, tema }: Props) {
     let f = v;
     if (v.length > 2) f = `(${v.slice(0, 2)}) ${v.slice(2)}`;
     if (v.length > 7) f = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
-    setValue("phone", f, { shouldValidate: true });
+    setValue("telefone", f, { shouldValidate: true });
   };
 
   const avancar = async () => { if (await trigger(camposEtapa1)) setEtapa(2); };
@@ -187,8 +187,8 @@ export function RegistrationForm({ evento, formulario, tema }: Props) {
           <>
             <div className="space-y-1.5">
               <Label htmlFor="f-name" className="text-sm text-foreground">Nome completo</Label>
-              <Input id="f-name" {...register("name")} placeholder="Seu nome" className={campo} />
-              {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
+              <Input id="f-name" {...register("nome")} placeholder="Seu nome" className={campo} />
+              {errors.nome && <p className="text-xs text-destructive">{errors.nome.message}</p>}
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="f-email" className="text-sm text-foreground">E-mail</Label>
@@ -197,22 +197,22 @@ export function RegistrationForm({ evento, formulario, tema }: Props) {
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="f-phone" className="text-sm text-foreground">WhatsApp</Label>
-              <Input id="f-phone" type="tel" {...register("phone")} onChange={mascaraTelefone} placeholder="(00) 00000-0000" maxLength={15} className={campo} />
-              {errors.phone && <p className="text-xs text-destructive">{errors.phone.message}</p>}
+              <Input id="f-phone" type="tel" {...register("telefone")} onChange={mascaraTelefone} placeholder="(00) 00000-0000" maxLength={15} className={campo} />
+              {errors.telefone && <p className="text-xs text-destructive">{errors.telefone.message}</p>}
             </div>
             <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
               <div className="col-span-2 space-y-1.5 sm:col-span-4">
                 <Label htmlFor="f-city" className="text-sm text-foreground">Cidade</Label>
-                <Input id="f-city" {...register("city")} placeholder="Ex: São Paulo" className={campo} />
-                {errors.city && <p className="text-xs text-destructive">{errors.city.message}</p>}
+                <Input id="f-city" {...register("cidade")} placeholder="Ex: São Paulo" className={campo} />
+                {errors.cidade && <p className="text-xs text-destructive">{errors.cidade.message}</p>}
               </div>
               <div className="col-span-1 space-y-1.5">
                 <Label htmlFor="f-state" className="text-sm text-foreground">Estado</Label>
-                <select id="f-state" {...register("state")} defaultValue="" className={SELETOR}>
+                <select id="f-state" {...register("estado")} defaultValue="" className={SELETOR}>
                   <option value="" disabled>UF</option>
                   {UFS.map((uf) => <option key={uf} value={uf} className="bg-background text-foreground">{uf}</option>)}
                 </select>
-                {errors.state && <p className="text-xs text-destructive">{errors.state.message}</p>}
+                {errors.estado && <p className="text-xs text-destructive">{errors.estado.message}</p>}
               </div>
             </div>
             {perfil && lista(perfil, setPerfilEscolhido)}
