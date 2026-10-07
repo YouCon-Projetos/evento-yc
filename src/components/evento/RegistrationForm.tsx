@@ -147,7 +147,8 @@ export function RegistrationForm({ evento, formulario, tema }: Props) {
     const inscricao = Object.fromEntries(campos.map((c) => [c, dados[c]]));
     copiarParaOYouHub({ ...inscricao, evento });
     try {
-      await enviarInscricao({ ...inscricao, evento });
+      // origem: o padrão de todos os formulários (YouHub › IDs e valores); evento = qual evento.
+      await enviarInscricao({ ...inscricao, evento, origem: "evento" });
     } catch (e) {
       // A inscrição segue para o grupo mesmo se o webhook falhar: perder o lead é pior
       console.error("Erro ao enviar inscrição:", e);
