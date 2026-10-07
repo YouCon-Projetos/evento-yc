@@ -18,20 +18,34 @@ const sim_nao = [
   { valor: "nao", rotulo: "Não" },
 ];
 
-/** Etapa 2 dos eventos residenciais, usada por quem não define `perfil` nem `qualificacao`. */
+/**
+ * Etapa 2 dos eventos residenciais, usada por quem não define `perfil` nem `qualificacao`.
+ * Os nomes dos campos são os de sempre (o n8n lê hasLot, hasProject e
+ * investmentAmount); os valores seguem o padrão do formulário do site desde
+ * 07/10/2026: projeto `arquitetonico`/`nao` e as mesmas 5 faixas de investimento.
+ */
 const QUALIFICACAO_PADRAO: Pergunta[] = [
   { campo: "hasLot", rotulo: "Já possui terreno?", placeholder: "Selecione", opcoes: sim_nao },
-  { campo: "hasProject", rotulo: "Você já possui projeto arquitetônico?", placeholder: "Selecione", opcoes: sim_nao },
+  {
+    campo: "hasProject",
+    rotulo: "Você já possui projeto arquitetônico?",
+    placeholder: "Selecione",
+    opcoes: [
+      { valor: "arquitetonico", rotulo: "Sim" },
+      { valor: "nao", rotulo: "Não" },
+    ],
+  },
   {
     campo: "investmentAmount",
     rotulo: "Quanto você planeja investir na sua obra?",
     placeholder: "Selecione uma faixa",
     opcoes: [
-      "Entre R$ 100 mil e R$ 500 mil",
-      "Entre R$ 600 mil e R$ 800 mil",
-      "Entre R$ 800 mil e R$ 1,2 milhão",
-      "Entre R$ 1,2 milhão e R$ 2 milhões ou mais",
-    ].map((v) => ({ valor: v, rotulo: v })),
+      { valor: "100_500_mil", rotulo: "Entre R$ 100 mil e R$ 500 mil" },
+      { valor: "600_800_mil", rotulo: "Entre R$ 600 mil e R$ 800 mil" },
+      { valor: "800_1_2M", rotulo: "Entre R$ 800 mil e R$ 1,2 milhão" },
+      { valor: "1_2_2M", rotulo: "Entre R$ 1,2 milhão e R$ 2 milhões" },
+      { valor: "2M_mais", rotulo: "Acima de R$ 2 milhões" },
+    ],
   },
 ];
 
