@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { copiarParaOYouHub, enviarInscricao } from "@/lib/inscricao";
-import { trackLead } from "@/lib/pixel";
+import { aceitouMarketing, novoIdEvento, trackLead } from "@/lib/pixel";
 import type { EventoConfig, Pergunta } from "@/eventos/tipos";
 
 const UFS = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
@@ -146,14 +146,18 @@ export function RegistrationForm({ evento, formulario, tema }: Props) {
     const campos = [...camposEtapa1, ...perguntas.map((p) => p.campo)];
     const inscricao = Object.fromEntries(campos.map((c) => [c, dados[c]]));
     copiarParaOYouHub({ ...inscricao, evento });
+    // Mesmo id para o pixel do navegador e para o servidor (API de Conversões): a Meta conta um lead só
+    const eventoMeta = novoIdEvento();
+    // Só com "Marketing" aceito o lead vai à Meta, pelo pixel e pelo servidor
+    const anuncios = aceitouMarketing();
     try {
       // origem: o padrão de todos os formulários (YouHub › IDs e valores); evento = qual evento.
-      await enviarInscricao({ ...inscricao, evento, origem: "evento" });
+      await enviarInscricao({ ...inscricao, evento, origem: "evento", anuncios, eventoMeta, url: window.location.href });
     } catch (e) {
       // A inscrição segue para o grupo mesmo se o webhook falhar: perder o lead é pior
       console.error("Erro ao enviar inscrição:", e);
     }
-    trackLead();
+    if (anuncios) trackLead(eventoMeta, evento);
     await new Promise((r) => setTimeout(r, 300));
     window.location.href = formulario.redirect;
   };

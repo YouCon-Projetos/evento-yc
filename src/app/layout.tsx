@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import { PixelInit } from "@/components/PixelInit";
+import { CookieBanner } from "@/components/tracking/CookieBanner";
 import { SITE_URL } from "@/lib/metadata";
 import "./globals.css";
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <PixelInit />
         {children}
+        <CookieBanner />
       </body>
     </html>
   );

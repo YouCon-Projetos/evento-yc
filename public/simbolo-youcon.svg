@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 195.69 226.42">
+  <defs>
+    <linearGradient id="Gradiente_sem_nome_22" data-name="Gradiente sem nome 22" x1="0" y1="113.21" x2="195.69" y2="113.21" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e58e44"/>
+      <stop offset=".51" stop-color="#e27b44"/>
+      <stop offset="1" stop-color="#e06944"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#Gradiente_sem_nome_22)" d="M195.69,126.07L34.21,222.52v-21.15l44.64-27.53c.21-.13.46.09.34-.45l-46.32-27.59v-21.56l64.8,37.8,98.01-57.14v21.15ZM32.87,81.94v21.56l64.83,38.98,97.98-58.72v-21.42l-98.12,57-64.69-37.39ZM102.16,202.84l-21.74,12.99,17.14,10.59,98.12-57.05v-20.22l-93.52,53.69ZM97.56,0L0,56.42v113.05l26.03,14.99,17.69-10.28-26.08-15.29v-92.02S97.56,20.62,97.56,20.62l67.24,38.51,18.03-10.4L97.56,0Z"/>
+</svg>

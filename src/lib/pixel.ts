@@ -9,7 +9,16 @@ declare global {
 
 const PIXEL_ID = "825619885244890";
 
-/** Carrega o Meta Pixel uma única vez, no cliente. */
+/** "Marketing" aceito no banner de cookies (CookieBanner grava yc_consent). */
+export function aceitouMarketing(): boolean {
+  try {
+    return JSON.parse(localStorage.getItem("yc_consent") ?? "{}").ad_user_data === "granted";
+  } catch {
+    return false;
+  }
+}
+
+/** Carrega o Meta Pixel uma única vez, no cliente. Só se chama com Marketing aceito. */
 export function initPixel() {
   if (typeof window === "undefined" || window.fbq) return;
 
@@ -42,6 +51,21 @@ export function initPixel() {
   window.fbq("track", "PageView");
 }
 
-export function trackLead() {
-  if (typeof window !== "undefined" && window.fbq) window.fbq("track", "Lead");
+/**
+ * Lead no pixel do navegador, se ele carregou (só com Marketing aceito). O
+ * eventID é o mesmo id que o servidor manda pela API de Conversões: a Meta conta um lead só.
+ */
+export function trackLead(eventId: string, conteudo: string) {
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", "Lead", { content_name: conteudo }, { eventID: eventId });
+  }
+}
+
+/** Id do Lead, gerado no envio. Navegador antigo ou sem contexto seguro: UUID v4 com Math.random. */
+export function novoIdEvento(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return crypto.randomUUID();
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
 }
