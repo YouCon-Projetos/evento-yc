@@ -6,8 +6,8 @@ import { proximoEventoAberto } from "@/lib/proximo-evento";
 
 export const metadata = metadataDoEvento(consultoria);
 
-// A decisão depende da hora da visita, então a raiz é resolvida a cada pedido
-export const dynamic = "force-dynamic";
+// A decisão depende da hora: a raiz é refeita a cada 60 s (antes, a cada visita)
+export const revalidate = 60;
 
 /** A raiz leva ao próximo evento aberto. Sem nenhum no calendário, mostra a consultoria genérica. */
 export default function Home() {
